@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="winkert_guiWords" Class="guiWordsDBMDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=mssql2.worldplanethosting.com;Initial Catalog=winkert_guiWords;Persist Security Info=True;User ID=winkert_winkert" SettingsObjectName="guiWords.Properties.Settings" SettingsPropertyName="winkert_guiWordsConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="winkert_winkert.tWordForms" Member="tWordForms">
+    <Type Name="tWordForms">
+      <Column Name="wf_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="d_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="d_Word" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="d_Meaning" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="s_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="wf_Form" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="e_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="vc_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="vb_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="nc_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="nd_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ge_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="vm_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="num_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="part_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="vp_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="vt_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="vv_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="utCase_tWordForm" Member="utCase" ThisKey="nc_ID" OtherKey="nc_ID" Type="utCase" IsForeignKey="true" />
+      <Association Name="utVoice_tWordForm" Member="utVoice" ThisKey="vv_ID" OtherKey="vv_ID" Type="utVoice" IsForeignKey="true" />
+      <Association Name="utConj_tWordForm" Member="utConj" ThisKey="vc_ID" OtherKey="vc_ID" Type="utConj" IsForeignKey="true" />
+      <Association Name="utDecl_tWordForm" Member="utDecl" ThisKey="nd_ID" OtherKey="nd_ID" Type="utDecl" IsForeignKey="true" />
+      <Association Name="utGender_tWordForm" Member="utGender" ThisKey="ge_ID" OtherKey="ge_ID" Type="utGender" IsForeignKey="true" />
+      <Association Name="utMood_tWordForm" Member="utMood" ThisKey="vm_ID" OtherKey="vm_ID" Type="utMood" IsForeignKey="true" />
+      <Association Name="utNumber_tWordForm" Member="utNumber" ThisKey="num_ID" OtherKey="num_ID" Type="utNumber" IsForeignKey="true" />
+      <Association Name="utPartOfSpeech_tWordForm" Member="utPartOfSpeech" ThisKey="part_ID" OtherKey="ps_ID" Type="utPartOfSpeech" IsForeignKey="true" />
+      <Association Name="utPerson_tWordForm" Member="utPerson" ThisKey="vp_ID" OtherKey="vp_ID" Type="utPerson" IsForeignKey="true" />
+      <Association Name="utTense_tWordForm" Member="utTense" ThisKey="vt_ID" OtherKey="vt_ID" Type="utTense" IsForeignKey="true" />
+      <Association Name="utVerb_tWordForm" Member="utVerb" ThisKey="vb_ID" OtherKey="vb_ID" Type="utVerb" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="winkert_winkert.utCase" Member="utCases">
+    <Type Name="utCase">
+      <Column Name="nc_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nc_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="nc_Description" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="utCase_tWordForm" Member="tWordForms" ThisKey="nc_ID" OtherKey="nc_ID" Type="tWordForms" />
+    </Type>
+  </Table>
+  <Table Name="winkert_winkert.utVoice" Member="utVoices">
+    <Type Name="utVoice">
+      <Column Name="vv_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="vv_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="vv_Description" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="utVoice_tWordForm" Member="tWordForms" ThisKey="vv_ID" OtherKey="vv_ID" Type="tWordForms" />
+    </Type>
+  </Table>
+  <Table Name="winkert_winkert.utConj" Member="utConjs">
+    <Type Name="utConj">
+      <Column Name="vc_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="vc_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="vc_Description" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="vc_Conj1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="vc_Conj2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="utConj_tWordForm" Member="tWordForms" ThisKey="vc_ID" OtherKey="vc_ID" Type="tWordForms" />
+    </Type>
+  </Table>
+  <Table Name="winkert_winkert.utDecl" Member="utDecls">
+    <Type Name="utDecl">
+      <Column Name="nd_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nd_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="nd_Description" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="nd_Decl1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="nd_Decl2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="utDecl_tWordForm" Member="tWordForms" ThisKey="nd_ID" OtherKey="nd_ID" Type="tWordForms" />
+    </Type>
+  </Table>
+  <Table Name="winkert_winkert.utGender" Member="utGenders">
+    <Type Name="utGender">
+      <Column Name="ge_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ge_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="ge_Description" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="utGender_tWordForm" Member="tWordForms" ThisKey="ge_ID" OtherKey="ge_ID" Type="tWordForms" />
+    </Type>
+  </Table>
+  <Table Name="winkert_winkert.utMood" Member="utMoods">
+    <Type Name="utMood">
+      <Column Name="vm_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="vm_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="vm_Description" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="utMood_tWordForm" Member="tWordForms" ThisKey="vm_ID" OtherKey="vm_ID" Type="tWordForms" />
+    </Type>
+  </Table>
+  <Table Name="winkert_winkert.utNumber" Member="utNumbers">
+    <Type Name="utNumber">
+      <Column Name="num_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="num_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="num_Description" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="utNumber_tWordForm" Member="tWordForms" ThisKey="num_ID" OtherKey="num_ID" Type="tWordForms" />
+    </Type>
+  </Table>
+  <Table Name="winkert_winkert.utPartOfSpeech" Member="utPartOfSpeeches">
+    <Type Name="utPartOfSpeech">
+      <Column Name="ps_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="part_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="part_Description" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="utPartOfSpeech_tWordForm" Member="tWordForms" ThisKey="ps_ID" OtherKey="part_ID" Type="tWordForms" />
+    </Type>
+  </Table>
+  <Table Name="winkert_winkert.utPerson" Member="utPersons">
+    <Type Name="utPerson">
+      <Column Name="vp_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="vp_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="vp_Description" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="utPerson_tWordForm" Member="tWordForms" ThisKey="vp_ID" OtherKey="vp_ID" Type="tWordForms" />
+    </Type>
+  </Table>
+  <Table Name="winkert_winkert.utTense" Member="utTenses">
+    <Type Name="utTense">
+      <Column Name="vt_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="vt_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="vt_Description" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="utTense_tWordForm" Member="tWordForms" ThisKey="vt_ID" OtherKey="vt_ID" Type="tWordForms" />
+    </Type>
+  </Table>
+  <Table Name="winkert_winkert.utVerb" Member="utVerbs">
+    <Type Name="utVerb">
+      <Column Name="vb_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="vb_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="vb_Description" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="utVerb_tWordForm" Member="tWordForms" ThisKey="vb_ID" OtherKey="vb_ID" Type="tWordForms" />
+    </Type>
+  </Table>
+  <Table Name="winkert_winkert.FormsView" Member="FormsViews">
+    <Type Name="FormsView" Id="ID1">
+      <Column Name="d_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="d_Word" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="d_Meaning" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="s_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="wf_Form" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="e_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="vc_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="vb_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="nd_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="nc_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="ge_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="vm_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="num_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="part_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="vp_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="vt_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="vv_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.sp_guiWords_Parse" Method="sp_guiWords_Parse">
+    <Parameter Name="query" Type="System.String" DbType="VarChar(50)" />
+    <ElementType IdRef="ID1" />
+  </Function>
+</Database>
