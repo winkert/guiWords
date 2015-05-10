@@ -1,5 +1,2 @@
-bin/Release/Web.config
-bin/Debug/guiWords.exe
-bin/Release/guiWords.exe
-bin/Debug/guiWords.pdb
-bin/Debug/guiWords.pdb
+bin
+obj
