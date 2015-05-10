@@ -141,11 +141,12 @@ namespace guiWords
             {
                 using (guiWordsDBMDataContext gWord = new guiWordsDBMDataContext(con))
                 {
-                    //List<FormsView> d = gWord.sp_guiWords_Parse(query).ToList();
-                    List<FormsView> d = gWord.FormsViews.ToList();
-                    var r = from all in d
-                            join f in qTerms on all.wf_Form equals f
-                            select all;
+                    List<FormsView> d = gWord.sp_guiWords_Parse(query).ToList();
+                    //List<FormsView> d = gWord.FormsViews.ToList();
+                    //var r = from all in d
+                    //        join f in qTerms on all.wf_Form equals f
+                    //        select all;
+                    //foreach(var item in r)
                     foreach (var item in d)
                     {
                         if (!s.dWordIDs.Contains((int)item.d_ID))

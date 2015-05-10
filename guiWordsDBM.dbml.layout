@@ -74,88 +74,88 @@
         <elementListCompartment Id="133f9dda-3e88-4a36-a63a-c306ff16114a" absoluteBounds="7.2650000000000006, 5.2100000000000009, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.375 : 1.19314697265625); (2.75 : 1.19314697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/guiWordsDBMDataContext/utCase/utCase_tWordForm" />
-      <nodes>
-        <classShapeMoniker Id="03e18cfe-13b0-485f-85b1-c0f8b6f40a40" />
-        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(4.375 : 3.31814697265625); (2.75 : 3.31814697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/guiWordsDBMDataContext/utVoice/utVoice_tWordForm" />
-      <nodes>
-        <classShapeMoniker Id="ea9b78a7-300e-4154-a1ec-af0d5fff0f17" />
-        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(7.25 : 7.88544840494792); (6.625 : 7.88544840494792); (6.625 : 6.625); (2.31717948717948 : 6.625 : JumpStart); (2.15051282051282 : 6.625 : JumpEnd); (1.75 : 6.625); (1.75 : 4.7708154296875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/guiWordsDBMDataContext/utConj/utConj_tWordForm" />
-      <nodes>
-        <classShapeMoniker Id="0e873013-c3bb-4906-8e33-3cc616b03f8e" />
-        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(7.25 : 10.1354484049479); (6.625 : 10.1354484049479); (6.625 : 8.75); (2.23384615384615 : 8.75); (2.23384615384615 : 4.7708154296875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/guiWordsDBMDataContext/utDecl/utDecl_tWordForm" />
-      <nodes>
-        <classShapeMoniker Id="de506024-4c85-4602-9e5c-6472cfe27a3e" />
-        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(4.375 : 5.4848071875); (2.31717948717948 : 5.4848071875 : JumpStart); (2.15051282051282 : 5.4848071875 : JumpEnd); (1.83333333333333 : 5.4848071875 : JumpStart); (1.66666666666667 : 5.4848071875 : JumpEnd); (1.2187475 : 5.4848071875); (1.2187475 : 4.7708154296875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/guiWordsDBMDataContext/utGender/utGender_tWordForm" />
-      <nodes>
-        <classShapeMoniker Id="95e1bee0-18d1-42b5-824e-804275a9b506" />
-        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(4.375 : 7.5625); (2.31717948717948 : 7.5625 : JumpStart); (2.15051282051282 : 7.5625 : JumpEnd); (1.48437375 : 7.5625); (1.48437375 : 4.7708154296875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/guiWordsDBMDataContext/utMood/utMood_tWordForm" />
-      <nodes>
-        <classShapeMoniker Id="c600b512-fa47-4504-8e93-736048868653" />
-        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(4.375 : 9); (4.18392556509888 : 8.80892556509888 : JumpStart); (4.06607443490112 : 8.69107443490112 : JumpEnd); (4 : 8.625); (4 : 2.25564697265625); (2.75 : 2.25564697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/guiWordsDBMDataContext/utNumber/utNumber_tWordForm" />
-      <nodes>
-        <classShapeMoniker Id="0c26c8c5-6b62-4d5e-9c1b-11929cc56402" />
-        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(4.375 : 11.8181469726563); (4.125 : 11.8181469726563); (4.125 : 8.5); (2.31717948717948 : 8.5 : JumpStart); (2.15051282051282 : 8.5 : JumpEnd); (0.95312175 : 8.5); (0.95312175 : 4.7708154296875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/guiWordsDBMDataContext/utPartOfSpeech/utPartOfSpeech_tWordForm" />
-      <nodes>
-        <classShapeMoniker Id="7fb20f16-aad5-4353-aa81-73b19ba0d57a" />
-        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(7.25 : 0.5); (6.875 : 0.125); (3.12653746153846 : 0.125); (2.75 : 0.501537461538462)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/guiWordsDBMDataContext/utPerson/utPerson_tWordForm" />
-      <nodes>
-        <classShapeMoniker Id="0abdf1a5-75df-41a4-a9a6-0b7c3e5be612" />
-        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(7.25 : 4.0112939453125); (6.75 : 4.5112939453125); (3.375 : 4.5112939453125); (3.375 : 5.36196827584135); (2.75 : 4.73696827584135)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/guiWordsDBMDataContext/utTense/utTense_tWordForm" />
-      <nodes>
-        <classShapeMoniker Id="55a638b1-5f21-493e-85aa-b7c56a5d93d2" />
-        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(7.3118490375601 : 4.75); (6.9993490375601 : 4.4375); (3.125 : 4.4375); (3.125 : 5.17812312199519); (2.71769230769231 : 4.7708154296875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/guiWordsDBMDataContext/utVerb/utVerb_tWordForm" />
-      <nodes>
-        <classShapeMoniker Id="b6561c72-bbb6-4710-b730-6ec94a0b53e6" />
-        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
-      </nodes>
-    </associationConnector>
     <classShape Id="5ab81913-1f75-49d9-938b-ebb0f4707452" absoluteBounds="1.875, 9, 2, 4.0785139973958326">
       <DataClassMoniker Name="/guiWordsDBMDataContext/FormsView" />
       <nestedChildShapes>
         <elementListCompartment Id="8303d60a-9125-4661-8c05-bef8175b4322" absoluteBounds="1.8900000000000001, 9.46, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <associationConnector edgePoints="[(4.375 : 1.19314697265625); (2.75 : 1.19314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/guiWordsDBMDataContext/utCase/utCase_tWordForms" />
+      <nodes>
+        <classShapeMoniker Id="03e18cfe-13b0-485f-85b1-c0f8b6f40a40" />
+        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.375 : 3.31814697265625); (4.08333333333333 : 3.31814697265625 : JumpStart); (3.91666666666667 : 3.31814697265625 : JumpEnd); (2.75 : 3.31814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/guiWordsDBMDataContext/utVoice/utVoice_tWordForms" />
+      <nodes>
+        <classShapeMoniker Id="ea9b78a7-300e-4154-a1ec-af0d5fff0f17" />
+        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.25 : 8.54734537760416); (2.36458533333333 : 8.54734537760416 : JumpStart); (2.19791866666667 : 8.54734537760416 : JumpEnd); (2.09895933333333 : 8.54734537760416 : JumpStart); (1.93229266666667 : 8.54734537760416 : JumpEnd); (1.75 : 8.54734537760416); (1.75 : 4.7708154296875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/guiWordsDBMDataContext/utConj/utConj_tWordForms" />
+      <nodes>
+        <classShapeMoniker Id="0e873013-c3bb-4906-8e33-3cc616b03f8e" />
+        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.25 : 10.1354484049479); (6.625 : 10.1354484049479); (6.625 : 8.75); (4.20833333333333 : 8.75 : JumpStart); (4.04166666666667 : 8.75 : JumpEnd); (2.281252 : 8.75); (2.281252 : 4.7708154296875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/guiWordsDBMDataContext/utDecl/utDecl_tWordForms" />
+      <nodes>
+        <classShapeMoniker Id="de506024-4c85-4602-9e5c-6472cfe27a3e" />
+        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.375 : 5.4848071875); (4.08333333333333 : 5.4848071875 : JumpStart); (3.91666666666667 : 5.4848071875 : JumpEnd); (2.63021183333333 : 5.4848071875 : JumpStart); (2.46354516666667 : 5.4848071875 : JumpEnd); (2.36458533333333 : 5.4848071875 : JumpStart); (2.19791866666667 : 5.4848071875 : JumpEnd); (2.09895933333333 : 5.4848071875 : JumpStart); (1.93229266666667 : 5.4848071875 : JumpEnd); (1.83333333333333 : 5.4848071875 : JumpStart); (1.66666666666667 : 5.4848071875 : JumpEnd); (1.2187475 : 5.4848071875); (1.2187475 : 4.7708154296875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/guiWordsDBMDataContext/utGender/utGender_tWordForms" />
+      <nodes>
+        <classShapeMoniker Id="95e1bee0-18d1-42b5-824e-804275a9b506" />
+        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.375 : 7.56814697265625); (4.08333333333333 : 7.56814697265625 : JumpStart); (3.91666666666667 : 7.56814697265625 : JumpEnd); (2.5468785 : 7.56814697265625); (2.5468785 : 4.7708154296875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/guiWordsDBMDataContext/utMood/utMood_tWordForms" />
+      <nodes>
+        <classShapeMoniker Id="c600b512-fa47-4504-8e93-736048868653" />
+        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.375 : 9); (4 : 8.625); (4 : 2.25564697265625); (2.75 : 2.25564697265625)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+      <AssociationMoniker Name="/guiWordsDBMDataContext/utNumber/utNumber_tWordForms" />
+      <nodes>
+        <classShapeMoniker Id="0c26c8c5-6b62-4d5e-9c1b-11929cc56402" />
+        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.375 : 11.8181469726563); (4.125 : 11.8181469726563); (4.125 : 8.875); (2.015626 : 8.875); (2.015626 : 4.7708154296875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/guiWordsDBMDataContext/utPartOfSpeech/utPartOfSpeech_tWordForms" />
+      <nodes>
+        <classShapeMoniker Id="7fb20f16-aad5-4353-aa81-73b19ba0d57a" />
+        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.25 : 0.5); (6.875 : 0.125); (3.12653746153846 : 0.125); (2.75 : 0.501537461538462)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/guiWordsDBMDataContext/utPerson/utPerson_tWordForms" />
+      <nodes>
+        <classShapeMoniker Id="0abdf1a5-75df-41a4-a9a6-0b7c3e5be612" />
+        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.25 : 4.0112939453125); (6.75 : 4.5112939453125); (4.08333333333333 : 4.5112939453125 : JumpStart); (3.91666666666667 : 4.5112939453125 : JumpEnd); (3.375 : 4.5112939453125); (3.375 : 5.36196827584135); (2.75 : 4.73696827584135)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/guiWordsDBMDataContext/utTense/utTense_tWordForms" />
+      <nodes>
+        <classShapeMoniker Id="55a638b1-5f21-493e-85aa-b7c56a5d93d2" />
+        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.3118490375601 : 4.75); (6.9993490375601 : 4.4375); (6.90712727864584 : 4.4375 : JumpStart); (6.74046061197917 : 4.4375 : JumpEnd); (4.08333333333333 : 4.4375 : JumpStart); (3.91666666666667 : 4.4375 : JumpEnd); (3.125 : 4.4375); (3.125 : 5.17812312199519); (2.71769230769231 : 4.7708154296875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/guiWordsDBMDataContext/utVerb/utVerb_tWordForms" />
+      <nodes>
+        <classShapeMoniker Id="b6561c72-bbb6-4710-b730-6ec94a0b53e6" />
+        <classShapeMoniker Id="8b1c7a65-0b46-49a2-911a-1f377747c4f9" />
+      </nodes>
+    </associationConnector>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

@@ -202,7 +202,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_guiWords_Parse")]
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="winkert_winkert.sp_guiWords_Parse")]
 		public ISingleResult<FormsView> sp_guiWords_Parse([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string query)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), query);
@@ -736,7 +736,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utCase_tWordForm", Storage="_utCase", ThisKey="nc_ID", OtherKey="nc_ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utCase_tWordForms", Storage="_utCase", ThisKey="nc_ID", OtherKey="nc_ID", IsForeignKey=true)]
 		public utCase utCase
 		{
 			get
@@ -770,7 +770,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utVoice_tWordForm", Storage="_utVoice", ThisKey="vv_ID", OtherKey="vv_ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utVoice_tWordForms", Storage="_utVoice", ThisKey="vv_ID", OtherKey="vv_ID", IsForeignKey=true)]
 		public utVoice utVoice
 		{
 			get
@@ -804,7 +804,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utConj_tWordForm", Storage="_utConj", ThisKey="vc_ID", OtherKey="vc_ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utConj_tWordForms", Storage="_utConj", ThisKey="vc_ID", OtherKey="vc_ID", IsForeignKey=true)]
 		public utConj utConj
 		{
 			get
@@ -838,7 +838,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utDecl_tWordForm", Storage="_utDecl", ThisKey="nd_ID", OtherKey="nd_ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utDecl_tWordForms", Storage="_utDecl", ThisKey="nd_ID", OtherKey="nd_ID", IsForeignKey=true)]
 		public utDecl utDecl
 		{
 			get
@@ -872,7 +872,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utGender_tWordForm", Storage="_utGender", ThisKey="ge_ID", OtherKey="ge_ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utGender_tWordForms", Storage="_utGender", ThisKey="ge_ID", OtherKey="ge_ID", IsForeignKey=true)]
 		public utGender utGender
 		{
 			get
@@ -906,7 +906,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utMood_tWordForm", Storage="_utMood", ThisKey="vm_ID", OtherKey="vm_ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utMood_tWordForms", Storage="_utMood", ThisKey="vm_ID", OtherKey="vm_ID", IsForeignKey=true)]
 		public utMood utMood
 		{
 			get
@@ -940,7 +940,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utNumber_tWordForm", Storage="_utNumber", ThisKey="num_ID", OtherKey="num_ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utNumber_tWordForms", Storage="_utNumber", ThisKey="num_ID", OtherKey="num_ID", IsForeignKey=true)]
 		public utNumber utNumber
 		{
 			get
@@ -974,7 +974,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utPartOfSpeech_tWordForm", Storage="_utPartOfSpeech", ThisKey="part_ID", OtherKey="ps_ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utPartOfSpeech_tWordForms", Storage="_utPartOfSpeech", ThisKey="part_ID", OtherKey="ps_ID", IsForeignKey=true)]
 		public utPartOfSpeech utPartOfSpeech
 		{
 			get
@@ -1008,7 +1008,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utPerson_tWordForm", Storage="_utPerson", ThisKey="vp_ID", OtherKey="vp_ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utPerson_tWordForms", Storage="_utPerson", ThisKey="vp_ID", OtherKey="vp_ID", IsForeignKey=true)]
 		public utPerson utPerson
 		{
 			get
@@ -1042,7 +1042,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utTense_tWordForm", Storage="_utTense", ThisKey="vt_ID", OtherKey="vt_ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utTense_tWordForms", Storage="_utTense", ThisKey="vt_ID", OtherKey="vt_ID", IsForeignKey=true)]
 		public utTense utTense
 		{
 			get
@@ -1076,7 +1076,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utVerb_tWordForm", Storage="_utVerb", ThisKey="vb_ID", OtherKey="vb_ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utVerb_tWordForms", Storage="_utVerb", ThisKey="vb_ID", OtherKey="vb_ID", IsForeignKey=true)]
 		public utVerb utVerb
 		{
 			get
@@ -1223,7 +1223,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utCase_tWordForm", Storage="_tWordForms", ThisKey="nc_ID", OtherKey="nc_ID")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utCase_tWordForms", Storage="_tWordForms", ThisKey="nc_ID", OtherKey="nc_ID")]
 		public EntitySet<tWordForms> tWordForms
 		{
 			get
@@ -1361,7 +1361,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utVoice_tWordForm", Storage="_tWordForms", ThisKey="vv_ID", OtherKey="vv_ID")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utVoice_tWordForms", Storage="_tWordForms", ThisKey="vv_ID", OtherKey="vv_ID")]
 		public EntitySet<tWordForms> tWordForms
 		{
 			get
@@ -1547,7 +1547,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utConj_tWordForm", Storage="_tWordForms", ThisKey="vc_ID", OtherKey="vc_ID")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utConj_tWordForms", Storage="_tWordForms", ThisKey="vc_ID", OtherKey="vc_ID")]
 		public EntitySet<tWordForms> tWordForms
 		{
 			get
@@ -1733,7 +1733,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utDecl_tWordForm", Storage="_tWordForms", ThisKey="nd_ID", OtherKey="nd_ID")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utDecl_tWordForms", Storage="_tWordForms", ThisKey="nd_ID", OtherKey="nd_ID")]
 		public EntitySet<tWordForms> tWordForms
 		{
 			get
@@ -1871,7 +1871,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utGender_tWordForm", Storage="_tWordForms", ThisKey="ge_ID", OtherKey="ge_ID")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utGender_tWordForms", Storage="_tWordForms", ThisKey="ge_ID", OtherKey="ge_ID")]
 		public EntitySet<tWordForms> tWordForms
 		{
 			get
@@ -2009,7 +2009,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utMood_tWordForm", Storage="_tWordForms", ThisKey="vm_ID", OtherKey="vm_ID")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utMood_tWordForms", Storage="_tWordForms", ThisKey="vm_ID", OtherKey="vm_ID")]
 		public EntitySet<tWordForms> tWordForms
 		{
 			get
@@ -2147,7 +2147,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utNumber_tWordForm", Storage="_tWordForms", ThisKey="num_ID", OtherKey="num_ID")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utNumber_tWordForms", Storage="_tWordForms", ThisKey="num_ID", OtherKey="num_ID")]
 		public EntitySet<tWordForms> tWordForms
 		{
 			get
@@ -2285,7 +2285,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utPartOfSpeech_tWordForm", Storage="_tWordForms", ThisKey="ps_ID", OtherKey="part_ID")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utPartOfSpeech_tWordForms", Storage="_tWordForms", ThisKey="ps_ID", OtherKey="part_ID")]
 		public EntitySet<tWordForms> tWordForms
 		{
 			get
@@ -2423,7 +2423,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utPerson_tWordForm", Storage="_tWordForms", ThisKey="vp_ID", OtherKey="vp_ID")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utPerson_tWordForms", Storage="_tWordForms", ThisKey="vp_ID", OtherKey="vp_ID")]
 		public EntitySet<tWordForms> tWordForms
 		{
 			get
@@ -2561,7 +2561,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utTense_tWordForm", Storage="_tWordForms", ThisKey="vt_ID", OtherKey="vt_ID")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utTense_tWordForms", Storage="_tWordForms", ThisKey="vt_ID", OtherKey="vt_ID")]
 		public EntitySet<tWordForms> tWordForms
 		{
 			get
@@ -2699,7 +2699,7 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utVerb_tWordForm", Storage="_tWordForms", ThisKey="vb_ID", OtherKey="vb_ID")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="utVerb_tWordForms", Storage="_tWordForms", ThisKey="vb_ID", OtherKey="vb_ID")]
 		public EntitySet<tWordForms> tWordForms
 		{
 			get
