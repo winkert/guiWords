@@ -200,6 +200,8 @@ namespace guiWords
                 wMeaning.FontFamily = fHeader;
                 wMeaning.BorderThickness = tBorder;
                 wMeaning.Background = null;
+                wMeaning.IsReadOnly = true;
+                wMeaning.TextWrapping = TextWrapping.WrapWithOverflow;
                 wSet.Margin = tMargins;
                 wSet.FontSize = 18;
                 wSet.FontFamily = fHeader;
@@ -221,9 +223,14 @@ namespace guiWords
                         wLine.FontSize = 16;
                         wLine.FontFamily = fResults;
                         wLine.IsReadOnly = true;
-                        String parsing = s.dForms[j] + (char)9 + s.pPerson[j] + s.pCase[j] + (char)9 + s.pNumber[j] + (char)9 + s.pGender[j] + (char)9 + s.pTense[j] + (char)9 + s.pMood[j] + (char)9 + s.pVoice[j];
-                        char tab = '\u0009';
-                        parsing = parsing.Replace(tab.ToString() + tab.ToString(), "");
+                        String parsing = s.dForms[j];
+                        parsing = addParsing(parsing, s.pPerson[j]);
+                        parsing = addParsing(parsing, s.pCase[j]);
+                        parsing = addParsing(parsing, s.pNumber[j]);
+                        parsing = addParsing(parsing, s.pGender[j]);
+                        parsing = addParsing(parsing, s.pTense[j]);
+                        parsing = addParsing(parsing, s.pMood[j]);
+                        parsing = addParsing(parsing, s.pVoice[j]);
                         wLine.Text = parsing;
                         wResults.Children.Add(wLine);
                     }
@@ -231,6 +238,15 @@ namespace guiWords
                 wSet.Content = wResults;
                 ResultGrid.Children.Add(wSet);
             }
+        }
+        public String addParsing(String p, String info)
+        {
+            char block = (char)9;
+            if (info.Length > 0)
+            {
+                p += block + info;
+            }
+            return p;
         }
     }
 }
