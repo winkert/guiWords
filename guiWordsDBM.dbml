@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="winkert_guiWords" Class="guiWordsDBMDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=mssql2.worldplanethosting.com;Initial Catalog=winkert_guiWords;Persist Security Info=True;User ID=winkert_winkert" SettingsObjectName="guiWords.Properties.Settings" SettingsPropertyName="winkert_guiWordsConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=mssql2.worldplanethosting.com;Initial Catalog=winkert_guiWords;User ID=winkert_winkert" SettingsObjectName="guiWords.Properties.Settings" SettingsPropertyName="winkert_guiWordsConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="winkert_winkert.tWordForms" Member="tWordForms">
     <Type Name="tWordForms">
       <Column Name="wf_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -148,6 +148,11 @@
   </Table>
   <Function Name="winkert_winkert.sp_guiWords_Parse" Method="sp_guiWords_Parse">
     <Parameter Name="query" Type="System.String" DbType="VarChar(50)" />
+    <ElementType IdRef="ID1" />
+  </Function>
+  <Function Name="winkert_winkert.sp_AllForms" Method="sp_AllForms">
+    <Parameter Name="d_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="part" Type="System.String" DbType="VarChar(15)" />
     <ElementType IdRef="ID1" />
   </Function>
 </Database>

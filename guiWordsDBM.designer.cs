@@ -69,7 +69,7 @@ namespace guiWords
     #endregion
 		
 		public guiWordsDBMDataContext() : 
-				base(global::guiWords.Properties.Settings.Default.winkert_guiWordsConnectionString, mappingSource)
+				base(global::guiWords.Properties.Settings.Default.winkert_guiWordsConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -206,6 +206,13 @@ namespace guiWords
 		public ISingleResult<FormsView> sp_guiWords_Parse([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string query)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), query);
+			return ((ISingleResult<FormsView>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="winkert_winkert.sp_AllForms")]
+		public ISingleResult<FormsView> sp_AllForms([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> d_ID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), d_ID);
 			return ((ISingleResult<FormsView>)(result.ReturnValue));
 		}
 	}
