@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="winkert_guiWords" Class="guiWordsDBMDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=mssql2.worldplanethosting.com;Initial Catalog=winkert_guiWords;User ID=winkert_winkert" SettingsObjectName="guiWords.Properties.Settings" SettingsPropertyName="winkert_guiWordsConnectionString1" Provider="System.Data.SqlClient" />
-  <Table Name="winkert_winkert.tWordForms" Member="tWordForms">
+  <Table Name="dbo.tWordForms" Member="tWordForms">
     <Type Name="tWordForms">
       <Column Name="wf_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="d_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -33,7 +33,7 @@
       <Association Name="utVerb_tWordForms" Member="utVerb" ThisKey="vb_ID" OtherKey="vb_ID" Type="utVerb" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="winkert_winkert.utCase" Member="utCases">
+  <Table Name="dbo.utCase" Member="utCases">
     <Type Name="utCase">
       <Column Name="nc_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="nc_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
@@ -41,7 +41,7 @@
       <Association Name="utCase_tWordForms" Member="tWordForms" ThisKey="nc_ID" OtherKey="nc_ID" Type="tWordForms" />
     </Type>
   </Table>
-  <Table Name="winkert_winkert.utVoice" Member="utVoices">
+  <Table Name="dbo.utVoice" Member="utVoices">
     <Type Name="utVoice">
       <Column Name="vv_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="vv_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
@@ -49,7 +49,7 @@
       <Association Name="utVoice_tWordForms" Member="tWordForms" ThisKey="vv_ID" OtherKey="vv_ID" Type="tWordForms" />
     </Type>
   </Table>
-  <Table Name="winkert_winkert.utConj" Member="utConjs">
+  <Table Name="dbo.utConj" Member="utConjs">
     <Type Name="utConj">
       <Column Name="vc_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="vc_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
@@ -59,7 +59,7 @@
       <Association Name="utConj_tWordForms" Member="tWordForms" ThisKey="vc_ID" OtherKey="vc_ID" Type="tWordForms" />
     </Type>
   </Table>
-  <Table Name="winkert_winkert.utDecl" Member="utDecls">
+  <Table Name="dbo.utDecl" Member="utDecls">
     <Type Name="utDecl">
       <Column Name="nd_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="nd_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
@@ -69,7 +69,7 @@
       <Association Name="utDecl_tWordForms" Member="tWordForms" ThisKey="nd_ID" OtherKey="nd_ID" Type="tWordForms" />
     </Type>
   </Table>
-  <Table Name="winkert_winkert.utGender" Member="utGenders">
+  <Table Name="dbo.utGender" Member="utGenders">
     <Type Name="utGender">
       <Column Name="ge_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ge_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
@@ -77,7 +77,7 @@
       <Association Name="utGender_tWordForms" Member="tWordForms" ThisKey="ge_ID" OtherKey="ge_ID" Type="tWordForms" />
     </Type>
   </Table>
-  <Table Name="winkert_winkert.utMood" Member="utMoods">
+  <Table Name="dbo.utMood" Member="utMoods">
     <Type Name="utMood">
       <Column Name="vm_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="vm_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
@@ -85,7 +85,7 @@
       <Association Name="utMood_tWordForms" Member="tWordForms" ThisKey="vm_ID" OtherKey="vm_ID" Type="tWordForms" />
     </Type>
   </Table>
-  <Table Name="winkert_winkert.utNumber" Member="utNumbers">
+  <Table Name="dbo.utNumber" Member="utNumbers">
     <Type Name="utNumber">
       <Column Name="num_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="num_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
@@ -93,7 +93,7 @@
       <Association Name="utNumber_tWordForms" Member="tWordForms" ThisKey="num_ID" OtherKey="num_ID" Type="tWordForms" />
     </Type>
   </Table>
-  <Table Name="winkert_winkert.utPartOfSpeech" Member="utPartOfSpeeches">
+  <Table Name="dbo.utPartOfSpeech" Member="utPartOfSpeeches">
     <Type Name="utPartOfSpeech">
       <Column Name="ps_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="part_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
@@ -101,7 +101,7 @@
       <Association Name="utPartOfSpeech_tWordForms" Member="tWordForms" ThisKey="ps_ID" OtherKey="part_ID" Type="tWordForms" />
     </Type>
   </Table>
-  <Table Name="winkert_winkert.utPerson" Member="utPersons">
+  <Table Name="dbo.utPerson" Member="utPersons">
     <Type Name="utPerson">
       <Column Name="vp_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="vp_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
@@ -109,7 +109,7 @@
       <Association Name="utPerson_tWordForms" Member="tWordForms" ThisKey="vp_ID" OtherKey="vp_ID" Type="tWordForms" />
     </Type>
   </Table>
-  <Table Name="winkert_winkert.utTense" Member="utTenses">
+  <Table Name="dbo.utTense" Member="utTenses">
     <Type Name="utTense">
       <Column Name="vt_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="vt_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
@@ -117,7 +117,7 @@
       <Association Name="utTense_tWordForms" Member="tWordForms" ThisKey="vt_ID" OtherKey="vt_ID" Type="tWordForms" />
     </Type>
   </Table>
-  <Table Name="winkert_winkert.utVerb" Member="utVerbs">
+  <Table Name="dbo.utVerb" Member="utVerbs">
     <Type Name="utVerb">
       <Column Name="vb_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="vb_Name" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
@@ -125,7 +125,7 @@
       <Association Name="utVerb_tWordForms" Member="tWordForms" ThisKey="vb_ID" OtherKey="vb_ID" Type="tWordForms" />
     </Type>
   </Table>
-  <Table Name="winkert_winkert.FormsView" Member="FormsViews">
+  <Table Name="dbo.FormsView" Member="FormsViews">
     <Type Name="FormsView" Id="ID1">
       <Column Name="d_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="d_Word" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />

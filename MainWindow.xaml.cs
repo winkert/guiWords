@@ -28,8 +28,25 @@ namespace guiWords
             this.txt_Query.Focus();
             using (SqlConnection connect = new SqlConnection(con))
             {
-                connect.Open();
                 Console.WriteLine(connect.ConnectionTimeout);
+                SqlCommand command = new SqlCommand(@"select top 1 * from tWordForms", connect);
+                connect.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                try
+                {
+                    while (reader.Read())
+                    {
+                        Console.WriteLine(reader[0]);
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                finally
+                {
+                    reader.Close();
+                }
                 connect.Close();
             }
         }
@@ -41,7 +58,8 @@ namespace guiWords
         public Thickness tBorder = new Thickness(1);
         public Thickness noBorder = new Thickness(0);
         public List<qHistory> searchHistory = new List<qHistory>();
-        public static String con = "Data Source=mssql2.worldplanethosting.com;Initial Catalog=winkert_guiWords;Integrated Security=False;User ID=winkert_winkert;Password=ViaPecuniae;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False";
+        public static String con = "Data Source=zpxjdd8j5t.database.windows.net;Initial Catalog=guiWords;Integrated Security=False;User ID=winkert;Password=12Rimmer!;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False";
+        //public static String con = "Data Source=mssql2.worldplanethosting.com;Initial Catalog=winkert_guiWords;Integrated Security=False;User ID=winkert_winkert;Password=ViaPecuniae;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False";
 #endregion
 #region Button Events
         //Quit button
