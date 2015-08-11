@@ -33,5 +33,16 @@ namespace guiWords.Properties {
                 return ((string)(this["winkert_guiWordsConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=mssql2.worldplanethosting.com;Initial Catalog=winkert_guiWords;User I" +
+            "D=winkert_winkert")]
+        public string winkert_guiWordsConnectionString1 {
+            get {
+                return ((string)(this["winkert_guiWordsConnectionString1"]));
+            }
+        }
     }
 }

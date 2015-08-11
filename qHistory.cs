@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace guiWords
 {
     public class qHistory
     {
-        String query;
+        string query;
+#region Publics
         public List<int> dWordIDs = new List<int>();
         public List<int> allIDs = new List<int>();
         public List<string> dForms = new List<string>();
@@ -24,6 +23,8 @@ namespace guiWords
         public List<string> pTense = new List<string>();
         public List<string> pMood = new List<string>();
         public List<string> pVoice = new List<string>();
+#endregion
+#region Constructors
         public qHistory()
         {
 
@@ -31,6 +32,13 @@ namespace guiWords
         public qHistory(string s)
         {
             query = s;
+        }
+#endregion
+#region Medthods
+        public override string ToString()
+        {
+            string ret = string.Join(", ", dWords);
+            return ret;
         }
         public Boolean isContained(List<string> q)
         {
@@ -43,5 +51,6 @@ namespace guiWords
             }
             return false;
         }
+#endregion
     }
 }

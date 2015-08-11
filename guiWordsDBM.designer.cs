@@ -69,7 +69,7 @@ namespace guiWords
     #endregion
 		
 		public guiWordsDBMDataContext() : 
-				base(global::guiWords.Properties.Settings.Default.winkert_guiWordsConnectionString, mappingSource)
+				base(global::guiWords.Properties.Settings.Default.winkert_guiWordsConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -202,15 +202,22 @@ namespace guiWords
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="winkert_winkert.sp_guiWords_Parse")]
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_guiWords_Parse")]
 		public ISingleResult<FormsView> sp_guiWords_Parse([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(50)")] string query)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), query);
 			return ((ISingleResult<FormsView>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_AllForms")]
+		public ISingleResult<FormsView> sp_AllForms([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> d_ID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), d_ID);
+			return ((ISingleResult<FormsView>)(result.ReturnValue));
+		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="winkert_winkert.tWordForms")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tWordForms")]
 	public partial class tWordForms : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1131,7 +1138,7 @@ namespace guiWords
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="winkert_winkert.utCase")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.utCase")]
 	public partial class utCase : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1269,7 +1276,7 @@ namespace guiWords
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="winkert_winkert.utVoice")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.utVoice")]
 	public partial class utVoice : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1407,7 +1414,7 @@ namespace guiWords
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="winkert_winkert.utConj")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.utConj")]
 	public partial class utConj : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1593,7 +1600,7 @@ namespace guiWords
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="winkert_winkert.utDecl")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.utDecl")]
 	public partial class utDecl : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1779,7 +1786,7 @@ namespace guiWords
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="winkert_winkert.utGender")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.utGender")]
 	public partial class utGender : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1917,7 +1924,7 @@ namespace guiWords
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="winkert_winkert.utMood")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.utMood")]
 	public partial class utMood : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -2055,7 +2062,7 @@ namespace guiWords
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="winkert_winkert.utNumber")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.utNumber")]
 	public partial class utNumber : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -2193,7 +2200,7 @@ namespace guiWords
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="winkert_winkert.utPartOfSpeech")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.utPartOfSpeech")]
 	public partial class utPartOfSpeech : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -2331,7 +2338,7 @@ namespace guiWords
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="winkert_winkert.utPerson")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.utPerson")]
 	public partial class utPerson : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -2469,7 +2476,7 @@ namespace guiWords
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="winkert_winkert.utTense")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.utTense")]
 	public partial class utTense : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -2607,7 +2614,7 @@ namespace guiWords
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="winkert_winkert.utVerb")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.utVerb")]
 	public partial class utVerb : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -2745,7 +2752,7 @@ namespace guiWords
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="winkert_winkert.FormsView")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FormsView")]
 	public partial class FormsView
 	{
 		

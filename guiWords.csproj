@@ -75,6 +75,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AllForms.xaml.cs">
+      <DependentUpon>AllForms.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms.cs" />
     <Compile Include="guiWordsDBM.cs">
       <DependentUpon>guiWordsDBM.dbml</DependentUpon>
     </Compile>
@@ -84,6 +88,10 @@
       <DependentUpon>guiWordsDBM.dbml</DependentUpon>
     </Compile>
     <Compile Include="qHistory.cs" />
+    <Page Include="AllForms.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
