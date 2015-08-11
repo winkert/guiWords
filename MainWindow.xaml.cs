@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define DEBUG
+//#undef DEBUG
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -24,26 +26,28 @@ namespace guiWords
                 Console.WriteLine(connect.ConnectionTimeout);
                 SqlCommand command = new SqlCommand(@"select top 1 * from tWordForms", connect);
                 connect.Open();
-                SqlDataReader reader = command.ExecuteReader();
                 try
                 {
+                    SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
                         Console.WriteLine(reader[0]);
                     }
+                    reader.Close();
                 }
                 catch (Exception e)
                 {
+                    
                     MessageBox.Show(e.Message);
                 }
                 finally
                 {
-                    reader.Close();
+                    
                 }
                 connect.Close();
             }
         }
-#region Publics
+        #region Publics
         public delegate void InitiateSearch(object o, RoutedEventArgs e);
         public FontFamily fHeader = new FontFamily("Palatino Linotype Bold");
         public FontFamily fResults = new FontFamily("Palatino Linotype");
@@ -51,10 +55,14 @@ namespace guiWords
         public Thickness tBorder = new Thickness(1);
         public Thickness noBorder = new Thickness(0);
         public List<qHistory> searchHistory = new List<qHistory>();
-        //public static String con = "Data Source=zpxjdd8j5t.database.windows.net;Initial Catalog=guiWords;Integrated Security=False;User ID=winkert;Password=12Rimmer!;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False";
+
+        #if DEBUG
+        public static String con = "Data Source=SUPERCOMPUTER;Integrated Security=True;Connect Timeout=15;Encrypt=False;Initial Catalog=Words;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        #else
         public static string con = "Data Source=mssql2.worldplanethosting.com;Initial Catalog=winkert_guiWords;Integrated Security=False;User ID=winkert_winkert;Password=ViaPecuniae;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False";
-#endregion
-#region Button Events
+        #endif
+        #endregion
+        #region Button Events
         //Quit button
         private void btn_Quit_Click(object sender, RoutedEventArgs e)
         {
@@ -65,7 +73,7 @@ namespace guiWords
         {
             //Set Cursor
             Cursor = Cursors.Wait;
-            #region Initial Checks
+#region Initial Checks
             //Check that txt_Query is not empty
             if (txt_Query.Text == "")
             {
@@ -86,9 +94,9 @@ namespace guiWords
                     return;
                 }
             }
-            #endregion
+#endregion
             //Variables and such
-            #region String Manipulation
+#region String Manipulation
             List<string> qTerms = new List<string>();
             //Regular Expressions to deal with u/v and i/j spelling variations.
             string regI = "([^aeiou])?(i)([aeiouv])";
@@ -108,8 +116,8 @@ namespace guiWords
                 qTerms.Add(Regex.Replace(lquery[i], regB, "$1bb$3"));
                 qTerms = qTerms.Distinct().ToList();
             }
-            #endregion
-            #region Search and Build
+#endregion
+#region Search and Build
             //Run the search and collect the results
             int totWords = 0;
             int totForms = 0;
@@ -154,7 +162,7 @@ namespace guiWords
             
             //add results to history
             searchHistory.Add(s);
-            #endregion
+#endregion
             //Reset Cursor
             Cursor = Cursors.Arrow;
             resetUI();
@@ -197,7 +205,7 @@ namespace guiWords
             f.Show();
         }
 #endregion
-#region Public Methods
+        #region Public Methods
         //Public Methods
         public qHistory SearchForms(List<string> qTerms, string q)
         {
@@ -281,16 +289,6 @@ namespace guiWords
                 wMeaning.Background = null;
                 wMeaning.IsReadOnly = true;
                 wMeaning.TextWrapping = TextWrapping.WrapWithOverflow;
-                //All Forms button
-                wAllForms.Content = "All Forms";
-                wAllForms.Width = 150;
-                wAllForms.Tag = s.dWordIDs[i];
-                wAllForms.Click += btn_ViewAllForms;
-                //Perseus button
-                wPerseus.Content = "Perseus Entry";
-                wPerseus.Width = 150;
-                wPerseus.Tag = s.dForms[i];
-                wPerseus.Click += btn_OpenPerseus;
                 //Grid setup
                 ncol.Width = new GridLength(150);
                 ncol2.Width = new GridLength(150);
@@ -302,6 +300,24 @@ namespace guiWords
                 wLinkGrid.ColumnDefinitions.Add(ncol2);
                 wLinkGrid.ColumnDefinitions.Add(ncol3);
                 wLinkGrid.ColumnDefinitions.Add(ncol4);
+                ///All Forms is an incomplete part of this application.
+                /// I need to refactor the entire thing before any sort of release is possible.
+                #region All Forms
+                //All Forms button
+                //wAllForms.Content = "All Forms";
+                //wAllForms.Width = 150;
+                //wAllForms.Tag = s.dWordIDs[i];
+                //wAllForms.Click += btn_ViewAllForms;
+                //Grid.SetColumn(wAllForms, 1);
+                //wLinkGrid.Children.Add(wAllForms);
+                #endregion
+                //Perseus button
+                wPerseus.Content = "Perseus Entry";
+                wPerseus.Width = 150;
+                wPerseus.Tag = s.dForms[i];
+                wPerseus.Click += btn_OpenPerseus;
+                Grid.SetColumn(wPerseus, 2);
+                wLinkGrid.Children.Add(wPerseus);
                 //Result set text
                 wSet.Margin = tMargins;
                 wSet.FontSize = 18;
@@ -314,14 +330,9 @@ namespace guiWords
                 wResults.Margin = tMargins;
                 wResults.Background = null;
                 #endregion
-                #region Insert Controls
                 //Need to add these before the loop
                 //Otherwise they end up below the results
                 wResults.Children.Add(wMeaning);
-                Grid.SetColumn(wAllForms, 1);
-                wLinkGrid.Children.Add(wAllForms);
-                Grid.SetColumn(wPerseus, 2);
-                wLinkGrid.Children.Add(wPerseus);
                 wResults.Children.Add(wLinkGrid);
                 #region Build Results
                 for (int j = 0; j < totForms; j++)
@@ -349,7 +360,6 @@ namespace guiWords
                 wSet.Content = wResults;
                 #endregion
                 ResultGrid.Children.Add(wSet);
-                #endregion
             }
         }
         public string addParsing(string p, string info)
@@ -366,6 +376,6 @@ namespace guiWords
             txt_Query.Text = string.Empty;
             txt_Query.Focus();
         }
-#endregion
+        #endregion
     }
 }
