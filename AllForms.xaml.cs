@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace guiWords
 {
@@ -32,14 +25,14 @@ namespace guiWords
             partCode = forms[0].part_Name;
             allForms = new Forms(forms);
             buildGrid(partCode);
-            this.Title = "All Forms of " + word;
+            Title = "All Forms of " + word;
         }
         #endregion
         #region Publics
         public List<FormsView> forms;
         public Forms allForms;
-        public String word;
-        public String partCode;
+        public string word;
+        public string partCode;
         public FontFamily fForms = new FontFamily("Palatino Linotype");
         public FontFamily fHead = new FontFamily("Palatino Linotype Bold");
         public GridLength fGridLength = new GridLength(200);
@@ -54,7 +47,7 @@ namespace guiWords
                 g.ColumnDefinitions[i].Width = fGridLength;
             }
         }
-        public void fillPanel(ref StackPanel panel, List<String> form, List<String> type, String other = "")
+        public void fillPanel(ref StackPanel panel, List<string> form, List<string> type, string other = "")
         {
             for (int i = 0; i < form.Count; i++)
             {
@@ -75,7 +68,7 @@ namespace guiWords
             }
             return AllForms;
         }
-        public TextBlock createHeader (String text)
+        public TextBlock createHeader (string text)
         {
             TextBlock header = new TextBlock();
             header.Text = text;
@@ -85,7 +78,7 @@ namespace guiWords
         }
         //Verb Functions
         #region All Verb Forms
-        public Expander buildVerbs(Forms forms, String mainHeader)
+        public Expander buildVerbs(Forms forms, string mainHeader)
         {
             Expander verbSet = new Expander();
             verbSet.Header = mainHeader;
@@ -97,7 +90,7 @@ namespace guiWords
             verbSets.Add(splitVerbByVoice(forms, "PASSIVE"));
             foreach (Forms f in verbSets)
             {
-                List<String> tensesInVerb = f.tenses.Distinct().ToList();
+                List<string> tensesInVerb = f.tenses.Distinct().ToList();
                 int numTenses = tensesInVerb.Count;
                 Grid g = new Grid();
                 for (int i = 0; i < numTenses; i++)
@@ -118,7 +111,7 @@ namespace guiWords
             verbSet.Content = holder;
             return verbSet;
         }
-        public Forms splitVerbByVoice(Forms forms, String voice)
+        public Forms splitVerbByVoice(Forms forms, string voice)
         {
             return ChangeForms.pickForms(forms, "Voice", voice);
         }
@@ -171,7 +164,7 @@ namespace guiWords
 
             }
         }
-        public StackPanel splitVerbByNumber(Forms forms, String numberHeader, List<String> criteria)
+        public StackPanel splitVerbByNumber(Forms forms, string numberHeader, List<string> criteria)
         {
             StackPanel verbSet = new StackPanel();
             Forms splitForms = ChangeForms.pickForms(forms, "Number", criteria[0]);
@@ -254,7 +247,7 @@ namespace guiWords
         }
         #endregion
         //Main build function called by instatiation
-        public void buildGrid(String pos)
+        public void buildGrid(string pos)
         {
             switch(pos)
             {
@@ -280,7 +273,7 @@ namespace guiWords
                     #endregion
                     #region Add Components
                     displayNouns(ref nounGrid);
-                    this.grd_AllForms.Children.Add(nounGrid);
+                    grd_AllForms.Children.Add(nounGrid);
                     #endregion
                     break;
                     #endregion
@@ -298,7 +291,7 @@ namespace guiWords
                     #endregion
                     #region Add Components
                     displayVerbs(ref verbGrid);
-                    this.grd_AllForms.Children.Add(verbGrid);
+                    grd_AllForms.Children.Add(verbGrid);
                     #endregion
                     break;
                     #endregion

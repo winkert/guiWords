@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Data.SqlClient;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
 namespace guiWords
 {
     /// <summary>
@@ -25,7 +18,7 @@ namespace guiWords
         public MainWindow()
         {
             InitializeComponent();
-            this.txt_Query.Focus();
+            txt_Query.Focus();
             using (SqlConnection connect = new SqlConnection(con))
             {
                 Console.WriteLine(connect.ConnectionTimeout);
@@ -58,20 +51,20 @@ namespace guiWords
         public Thickness tBorder = new Thickness(1);
         public Thickness noBorder = new Thickness(0);
         public List<qHistory> searchHistory = new List<qHistory>();
-        public static String con = "Data Source=zpxjdd8j5t.database.windows.net;Initial Catalog=guiWords;Integrated Security=False;User ID=winkert;Password=12Rimmer!;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False";
-        //public static String con = "Data Source=mssql2.worldplanethosting.com;Initial Catalog=winkert_guiWords;Integrated Security=False;User ID=winkert_winkert;Password=ViaPecuniae;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False";
+        //public static String con = "Data Source=zpxjdd8j5t.database.windows.net;Initial Catalog=guiWords;Integrated Security=False;User ID=winkert;Password=12Rimmer!;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False";
+        public static string con = "Data Source=mssql2.worldplanethosting.com;Initial Catalog=winkert_guiWords;Integrated Security=False;User ID=winkert_winkert;Password=ViaPecuniae;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False";
 #endregion
 #region Button Events
         //Quit button
         private void btn_Quit_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
         //Search button
         private void btn_Search_Click(object sender, RoutedEventArgs e)
         {
             //Set Cursor
-            this.Cursor = Cursors.Wait;
+            Cursor = Cursors.Wait;
             #region Initial Checks
             //Check that txt_Query is not empty
             if (txt_Query.Text == "")
@@ -82,7 +75,7 @@ namespace guiWords
             //clear the previous results
             ResultGrid.Children.Clear();
             //Populated a list of the query term(s)
-            String query = txt_Query.Text.Replace(", ", ",");
+            string query = txt_Query.Text.Replace(", ", ",");
             List<string> lquery = query.Split(new Char[] { ',', ' ' }, System.StringSplitOptions.RemoveEmptyEntries).ToList();
             //Check the search history for the search term(s) before continuing
             for (int i = 0; i < searchHistory.Count(); i++)
@@ -98,12 +91,12 @@ namespace guiWords
             #region String Manipulation
             List<string> qTerms = new List<string>();
             //Regular Expressions to deal with u/v and i/j spelling variations.
-            String regI = "([^aeiou])?(i)([aeiouv])";
-            String regJ = "(j)([aeiouv])";
-            String regU = "([^jaeio])?(u)([aeijou])";
-            String regV = "(v)([aeijou])";
-            String regR = "([aeiouvj])(r)([a-z])";
-            String regB = "([aeiouvj])(b)([a-z])";
+            string regI = "([^aeiou])?(i)([aeiouv])";
+            string regJ = "(j)([aeiouv])";
+            string regU = "([^jaeio])?(u)([aeijou])";
+            string regV = "(v)([aeijou])";
+            string regR = "([aeiouvj])(r)([a-z])";
+            string regB = "([aeiouvj])(b)([a-z])";
             for (int i = 0; i < lquery.Count(); i++)
             {
                 qTerms.Add(lquery[i]);
@@ -137,7 +130,7 @@ namespace guiWords
             rLine.Background = null;
             rLine.FontSize = 14;
             rSLine.Inlines.Add("Searched for: ");
-            rSLine.Inlines.Add(new Run(String.Join(", ", qTerms)) { FontWeight = FontWeights.Bold });
+            rSLine.Inlines.Add(new Run(string.Join(", ", qTerms)) { FontWeight = FontWeights.Bold });
             rLine.Text = totForms + " Forms and " + totWords + " Words found.";
             ResultGrid.Children.Add(rSLine);
             ResultGrid.Children.Add(rLine);
@@ -151,7 +144,7 @@ namespace guiWords
             else
             {
                 TextBox noResults = new TextBox();
-                noResults.Text = "No results were found for the following: " + (char)10 + String.Join(", ", qTerms);
+                noResults.Text = "No results were found for the following: " + (char)10 + string.Join(", ", qTerms);
                 noResults.FontFamily = fHeader;
                 noResults.FontSize = 20;
                 noResults.BorderThickness = noBorder;
@@ -163,20 +156,20 @@ namespace guiWords
             searchHistory.Add(s);
             #endregion
             //Reset Cursor
-            this.Cursor = Cursors.Arrow;
+            Cursor = Cursors.Arrow;
             resetUI();
         }
         //Load history
         private void btn_History_Click(object sender, RoutedEventArgs e)
         {
             //Set Cursor
-            this.Cursor = Cursors.Wait;
+            Cursor = Cursors.Wait;
             ResultGrid.Children.Clear();
             for (int i = 0; i < searchHistory.Count(); i++)
             {
                 BuildControls(searchHistory[i]);
             }
-            this.Cursor = Cursors.Arrow;
+            Cursor = Cursors.Arrow;
             resetUI();
         }
         //Enter key
@@ -192,7 +185,7 @@ namespace guiWords
         private void btn_OpenPerseus(object sender, RoutedEventArgs e)
         {
             Button b = sender as Button;
-            String form = b.Tag.ToString();
+            string form = b.Tag.ToString();
             System.Diagnostics.Process.Start("http://www.perseus.tufts.edu/hopper/morph?l=" + form + "&la=la");
         }
         //Open all forms window
@@ -206,7 +199,7 @@ namespace guiWords
 #endregion
 #region Public Methods
         //Public Methods
-        public qHistory SearchForms(List<string> qTerms, String q)
+        public qHistory SearchForms(List<string> qTerms, string q)
         {
             string query = string.Join(",", qTerms);
             qHistory s = new qHistory(q);
@@ -248,15 +241,15 @@ namespace guiWords
             }
             catch (Exception er)
             {
-                String Error = er.Message;
+                string Error = er.Message;
                 //String Trace = er.StackTrace;
-                String Inner = "";
+                string Inner = "";
                 if (er.InnerException != null)
                 {
                     Inner = er.InnerException.Message;
                 }
                 MessageBox.Show("Exception: " + (char)10 + Error + (char)10 + "Inner Exception: " + (char)10 + Inner /*+ (char)10 + "Stack Trace: " + (char)10 + Trace*/);
-                this.Cursor = Cursors.Arrow;
+                Cursor = Cursors.Arrow;
             }
             //return the result set
             return s;
@@ -341,7 +334,7 @@ namespace guiWords
                         wLine.FontSize = 16;
                         wLine.FontFamily = fResults;
                         wLine.IsReadOnly = true;
-                        String parsing = s.dForms[j];
+                        string parsing = s.dForms[j];
                         parsing = addParsing(parsing, s.pPerson[j]);
                         parsing = addParsing(parsing, s.pCase[j]);
                         parsing = addParsing(parsing, s.pNumber[j]);
@@ -359,7 +352,7 @@ namespace guiWords
                 #endregion
             }
         }
-        public String addParsing(String p, String info)
+        public string addParsing(string p, string info)
         {
             char block = (char)9;
             if (info.Length > 0)
@@ -370,8 +363,8 @@ namespace guiWords
         }
         public void resetUI()
         {
-            this.txt_Query.Text = String.Empty;
-            this.txt_Query.Focus();
+            txt_Query.Text = string.Empty;
+            txt_Query.Focus();
         }
 #endregion
     }

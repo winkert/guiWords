@@ -32,15 +32,15 @@ namespace guiWords
         }
         #endregion
         #region Variables
-        public String partofspeech;
-        public List<String> words = new List<String>();
-        public List<String> cases = new List<String>();
-        public List<String> numbers = new List<String>();
-        public List<String> genders = new List<String>();
-        public List<String> persons = new List<String>();
-        public List<String> tenses = new List<String>();
-        public List<String> moods = new List<String>();
-        public List<String> voices = new List<String>();
+        public string partofspeech;
+        public List<string> words = new List<string>();
+        public List<string> cases = new List<string>();
+        public List<string> numbers = new List<string>();
+        public List<string> genders = new List<string>();
+        public List<string> persons = new List<string>();
+        public List<string> tenses = new List<string>();
+        public List<string> moods = new List<string>();
+        public List<string> voices = new List<string>();
         public int count = 0;
         #endregion
         #region Public Functions
@@ -56,7 +56,7 @@ namespace guiWords
             voices.Add(f.voices[i]);
             count++;
         }
-        public void addForm(String w, String c, String n, String g, String p, String t, String m, String v)
+        public void addForm(string w, string c, string n, string g, string p, string t, string m, string v)
         {
             words.Add(w);
             cases.Add(c);
@@ -73,7 +73,7 @@ namespace guiWords
 
     public static class ChangeForms
     {
-        public static Forms pickForms(Forms f, String filter, String criteria)
+        public static Forms pickForms(Forms f, string filter, string criteria)
         {
             Forms lessForms = new Forms();
             switch (filter)
@@ -117,7 +117,7 @@ namespace guiWords
         //    }
         //    return forms;
         //}
-        public static Forms splitOnNumber(Forms f, String criteria)
+        public static Forms splitOnNumber(Forms f, string criteria)
         {
             Forms forms = new Forms();
             for (int i = 0; i < f.count; i++)
@@ -129,7 +129,7 @@ namespace guiWords
             }
             return forms;
         }
-        public static Forms splitOnGender(Forms f, String criteria)
+        public static Forms splitOnGender(Forms f, string criteria)
         {
             Forms forms = new Forms();
             for (int i = 0; i < f.count; i++)
@@ -153,7 +153,7 @@ namespace guiWords
         //    }
         //    return forms;
         //}
-        public static Forms splitOnTense(Forms f, String criteria)
+        public static Forms splitOnTense(Forms f, string criteria)
         {
             Forms forms = new Forms();
             for (int i = 0; i < f.count; i++)
@@ -165,7 +165,7 @@ namespace guiWords
             }
             return forms;
         }
-        public static Forms splitOnMood(Forms f, String criteria)
+        public static Forms splitOnMood(Forms f, string criteria)
         {
             Forms forms = new Forms();
             for (int i = 0; i < f.count; i++)
@@ -177,7 +177,7 @@ namespace guiWords
             }
             return forms;
         }
-        public static Forms splitOnVoice(Forms f, String criteria)
+        public static Forms splitOnVoice(Forms f, string criteria)
         {
             Forms forms = new Forms();
             for (int i = 0; i < f.count; i++)
@@ -190,10 +190,10 @@ namespace guiWords
             return forms;
         }
         #endregion
-        public static int countFormsLike(List<String> forms, String filter)
+        public static int countFormsLike(List<string> forms, string filter)
         {
             int count = 0;
-            foreach (String f in forms)
+            foreach (string f in forms)
             {
                 if (f == filter)
                 {
@@ -202,10 +202,10 @@ namespace guiWords
             }
             return count;
         }
-        public static int countFormSets(List<String> forms)
+        public static int countFormSets(List<string> forms)
         {
             int count = 0;
-            List<String> distinctForms = (List<String>)forms.Distinct();
+            List<string> distinctForms = (List<string>)forms.Distinct();
             count = distinctForms.Count;
             return count;
         }
