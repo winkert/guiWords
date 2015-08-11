@@ -73,7 +73,7 @@ namespace guiWords
 
     public static class ChangeForms
     {
-        public static Forms pickForms(Forms f, string filter, string criteria)
+        public static Forms pickForms(this Forms f, string filter, string criteria)
         {
             Forms lessForms = new Forms();
             switch (filter)

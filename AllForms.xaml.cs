@@ -113,18 +113,18 @@ namespace guiWords
         }
         public Forms splitVerbByVoice(Forms forms, string voice)
         {
-            return ChangeForms.pickForms(forms, "Voice", voice);
+            return forms.pickForms( "Voice", voice);
         }
         public void splitVerbByTense(Forms forms, ref Grid set)
         {
             List<Forms> formsByTense = new List<Forms>();
             //Add each set of forms according to mood
-            formsByTense.Add(ChangeForms.pickForms(forms, "Tense", "PRES"));
-            formsByTense.Add(ChangeForms.pickForms(forms, "Tense", "IMPF"));
-            formsByTense.Add(ChangeForms.pickForms(forms, "Tense", "FUT"));
-            formsByTense.Add(ChangeForms.pickForms(forms, "Tense", "PERF"));
-            formsByTense.Add(ChangeForms.pickForms(forms, "Tense", "PLUP"));
-            formsByTense.Add(ChangeForms.pickForms(forms, "Tense", "FUTP"));
+            formsByTense.Add(forms.pickForms( "Tense", "PRES"));
+            formsByTense.Add(forms.pickForms( "Tense", "IMPF"));
+            formsByTense.Add(forms.pickForms( "Tense", "FUT"));
+            formsByTense.Add(forms.pickForms( "Tense", "PERF"));
+            formsByTense.Add(forms.pickForms( "Tense", "PLUP"));
+            formsByTense.Add(forms.pickForms( "Tense", "FUTP"));
             //int maxi = g.ColumnDefinitions.Count * 2
             //int i = 0
             //i+=2
@@ -133,7 +133,7 @@ namespace guiWords
             //row2 = row
             //column2 = column + 1
             int maxI = set.ColumnDefinitions.Count * 2;
-            int f = (int)Math.Round((double)maxI / 2, MidpointRounding.AwayFromZero);
+            int f = (int)Math.Round((double)maxI / 2, MidpointRounding.AwayFromZero) - 1;
             for (int i = 0; i < maxI; i+=2)
             {
                 StackPanel singular = splitVerbByNumber(formsByTense[f], "Singular", formsByTense[f].numbers);
@@ -167,7 +167,7 @@ namespace guiWords
         public StackPanel splitVerbByNumber(Forms forms, string numberHeader, List<string> criteria)
         {
             StackPanel verbSet = new StackPanel();
-            Forms splitForms = ChangeForms.pickForms(forms, "Number", criteria[0]);
+            Forms splitForms = forms.pickForms( "Number", criteria[0]);
             if (criteria[0] != "X")
             {
                 TextBlock header = new TextBlock();
@@ -188,8 +188,8 @@ namespace guiWords
         #region UIDesign Functions
         public void displayNouns(ref Grid g)
         {
-            Forms singularForms = ChangeForms.pickForms(allForms, "Number", "S");
-            Forms pluralForms = ChangeForms.pickForms(allForms, "Number", "P");
+            Forms singularForms = allForms.pickForms("Number", "S");
+            Forms pluralForms = allForms.pickForms("Number", "P");
             StackPanel sgPanel = new StackPanel();
             StackPanel plPanel = new StackPanel();
             sgPanel.Children.Add(createHeader("Singular"));
@@ -206,11 +206,11 @@ namespace guiWords
             StackPanel verbPanel = new StackPanel();
             List<Forms> formsByMood = new List<Forms>();
             //Add each set of forms according to mood
-            formsByMood.Add(ChangeForms.pickForms(allForms, "Mood", "IND"));
-            formsByMood.Add(ChangeForms.pickForms(allForms, "Mood", "INF"));
-            formsByMood.Add(ChangeForms.pickForms(allForms, "Mood", "IMP"));
-            formsByMood.Add(ChangeForms.pickForms(allForms, "Mood", "SUB"));
-            formsByMood.Add(ChangeForms.pickForms(allForms, "Mood", "PPL"));
+            formsByMood.Add(allForms.pickForms("Mood", "IND"));
+            formsByMood.Add(allForms.pickForms("Mood", "INF"));
+            formsByMood.Add(allForms.pickForms("Mood", "IMP"));
+            formsByMood.Add(allForms.pickForms("Mood", "SUB"));
+            formsByMood.Add(allForms.pickForms("Mood", "PPL"));
             //for each mood, pass into a function which will create the expander set
             for (int i = 0; i < formsByMood.Count; i++ )
             {
