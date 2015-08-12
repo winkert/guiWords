@@ -215,7 +215,11 @@ namespace guiWords
             {
                 using (guiWordsDBMDataContext gWord = new guiWordsDBMDataContext(con))
                 {
+                    #if DEBUG
                     List<FormsView> d = gWord.sp_guiWords_Parse(query).ToList();
+                    #else
+                    List<FormsView> d = gWord.winkert_sp_guiWords_Parse(query).ToList();
+                    #endif
                     //List<FormsView> d = gWord.FormsViews.ToList();
                     //var r = from all in d
                     //        join f in qTerms on all.wf_Form equals f
