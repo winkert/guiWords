@@ -62,18 +62,18 @@ namespace guiWords
         public static string con = "Data Source=mssql2.worldplanethosting.com;Initial Catalog=winkert_guiWords;Integrated Security=False;User ID=winkert_winkert;Password=ViaPecuniae;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False";
         #endif
         #endregion
-        #region Button Events
+        #region Event Handlers
         //Quit button
         private void btn_Quit_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
-        //Search button
+        ///<summary>Search button</summary>
         private void btn_Search_Click(object sender, RoutedEventArgs e)
         {
             //Set Cursor
             Cursor = Cursors.Wait;
-#region Initial Checks
+            #region Initial Checks
             //Check that txt_Query is not empty
             if (txt_Query.Text == "")
             {
@@ -94,9 +94,9 @@ namespace guiWords
                     return;
                 }
             }
-#endregion
+            #endregion
             //Variables and such
-#region String Manipulation
+            #region String Manipulation
             List<string> qTerms = new List<string>();
             //Regular Expressions to deal with u/v and i/j spelling variations.
             string regI = "([^aeiou])?(i)([aeiouv])";
@@ -116,8 +116,8 @@ namespace guiWords
                 qTerms.Add(Regex.Replace(lquery[i], regB, "$1bb$3"));
                 qTerms = qTerms.Distinct().ToList();
             }
-#endregion
-#region Search and Build
+            #endregion
+            #region Search and Build
             //Run the search and collect the results
             int totWords = 0;
             int totForms = 0;
@@ -162,12 +162,12 @@ namespace guiWords
             
             //add results to history
             searchHistory.Add(s);
-#endregion
+            #endregion
             //Reset Cursor
             Cursor = Cursors.Arrow;
             resetUI();
         }
-        //Load history
+        ///<summary>Load history</summary>
         private void btn_History_Click(object sender, RoutedEventArgs e)
         {
             //Set Cursor
@@ -180,7 +180,7 @@ namespace guiWords
             Cursor = Cursors.Arrow;
             resetUI();
         }
-        //Enter key
+        ///<summary>Enter key</summary>
         private void txt_Query_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -189,14 +189,14 @@ namespace guiWords
                 search.Invoke(sender, e); 
             }
         }
-        //Open Perseus website
+        ///<summary>Open Perseus website</summary>
         private void btn_OpenPerseus(object sender, RoutedEventArgs e)
         {
             Button b = sender as Button;
             string form = b.Tag.ToString();
             System.Diagnostics.Process.Start("http://www.perseus.tufts.edu/hopper/morph?l=" + form + "&la=la");
         }
-        //Open all forms window
+        ///<summary>Open all forms window</summary>
         private void btn_ViewAllForms(object sender, RoutedEventArgs e)
         {
             Button b = sender as Button;
@@ -204,9 +204,9 @@ namespace guiWords
             AllForms f = new AllForms(d_id);
             f.Show();
         }
-#endregion
+        #endregion
         #region Public Methods
-        //Public Methods
+        ///<summary>Public Methods</summary>
         public qHistory SearchForms(List<string> qTerms, string q)
         {
             string query = string.Join(",", qTerms);
@@ -346,13 +346,13 @@ namespace guiWords
                         wLine.FontFamily = fResults;
                         wLine.IsReadOnly = true;
                         string parsing = s.dForms[j];
-                        parsing = addParsing(parsing, s.pPerson[j]);
-                        parsing = addParsing(parsing, s.pCase[j]);
-                        parsing = addParsing(parsing, s.pNumber[j]);
-                        parsing = addParsing(parsing, s.pGender[j]);
-                        parsing = addParsing(parsing, s.pTense[j]);
-                        parsing = addParsing(parsing, s.pMood[j]);
-                        parsing = addParsing(parsing, s.pVoice[j]);
+                        parsing = parsing.addParsing(s.pPerson[j]);
+                        parsing = parsing.addParsing(s.pCase[j]);
+                        parsing = parsing.addParsing(s.pNumber[j]);
+                        parsing = parsing.addParsing(s.pGender[j]);
+                        parsing = parsing.addParsing(s.pTense[j]);
+                        parsing = parsing.addParsing(s.pMood[j]);
+                        parsing = parsing.addParsing(s.pVoice[j]);
                         wLine.Text = parsing;
                         wResults.Children.Add(wLine);
                     }
@@ -361,15 +361,6 @@ namespace guiWords
                 #endregion
                 ResultGrid.Children.Add(wSet);
             }
-        }
-        public string addParsing(string p, string info)
-        {
-            char block = (char)9;
-            if (info.Length > 0)
-            {
-                p += block + info;
-            }
-            return p;
         }
         public void resetUI()
         {

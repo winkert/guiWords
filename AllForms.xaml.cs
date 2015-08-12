@@ -21,23 +21,29 @@ namespace guiWords
         {
             InitializeComponent();
             forms = getForms(d_ID);
+            //eachForm = getForms(d_ID);
             word = forms[0].wf_Form;
+            //remove
             partCode = forms[0].part_Name;
+            wPartCode = forms[0].part_Name.ParseEnum<PartsOfSpeech>();
+            //Remove
             allForms = new Forms(forms);
             buildGrid(partCode);
             Title = "All Forms of " + word;
         }
         #endregion
         #region Publics
-        public List<FormsView> forms;
+        private List<FormsView> forms;
+        private List<Form> eachForm;
+        //Remove
         public Forms allForms;
         public string word;
+        private PartsOfSpeech wPartCode;
+        //Remove
         public string partCode;
         public FontFamily fForms = new FontFamily("Palatino Linotype");
         public FontFamily fHead = new FontFamily("Palatino Linotype Bold");
         public GridLength fGridLength = new GridLength(200);
-        #endregion
-        #region Button Events
         #endregion
         #region Public Methods
         public void setGridWidth(ref Grid g)
@@ -68,6 +74,25 @@ namespace guiWords
             }
             return AllForms;
         }
+        /// <summary>
+        /// Get Forms from Database and put them into a list of Forms
+        /// </summary>
+        /// <param name="d">d_ID</param>
+        /// <returns>List of Forms</returns>
+        //public List<Form> getForms(int d)
+        //{
+        //    List<FormsView> AllForms;
+        //    using (guiWordsDBMDataContext gWord = new guiWordsDBMDataContext(MainWindow.con))
+        //    {
+        //        AllForms = gWord.sp_AllForms(d).ToList();
+        //    }
+        //    List<Form> forms = new List<Form>();
+        //    foreach (FormsView form in AllForms)
+        //    {
+        //        forms.Add(new Form(form));
+        //    }
+        //    return forms;
+        //}
         public TextBlock createHeader (string text)
         {
             TextBlock header = new TextBlock();
@@ -247,6 +272,7 @@ namespace guiWords
         }
         #endregion
         //Main build function called by instatiation
+        //public void buildGrid(PartsOfSpeech pos)
         public void buildGrid(string pos)
         {
             switch(pos)
@@ -259,6 +285,7 @@ namespace guiWords
                     //      This is done for each type of word (Gender, Tense, Mood, Voice, etc)
                     //      Each case has a different kind of loop which passes different list of forms
                 case "N":
+                //case PartsOfSpeech.N:
                     //For Nouns:
                     //      This is the simple one.
                     #region Noun
@@ -278,6 +305,7 @@ namespace guiWords
                     break;
                     #endregion
                 case "V":
+                //case PartsOfSpeech.V:
                     //For Verbs:
                     //      There are (6 * 2) + (4 * 2) + (2 + (3 * 3)) sets of forms (31) if I don't count Infinitives and Imperatives
                     //      Uses Expanders to separate each mood
@@ -296,12 +324,16 @@ namespace guiWords
                     break;
                     #endregion
                 case "ADJ":
+                //case PartsOfSpeech.ADJ:
                     break;
                 case "NUM":
+                //case PartsOfSpeech.NUM:
                     break;
                 case "PRON":
+                //case PartsOfSpeech.PRON:
                     break;
                 case "ADV":
+                //case PartsOfSpeech.ADV:
                     break;
                 default:
                     //Everything else is really simple. They are a single form.
