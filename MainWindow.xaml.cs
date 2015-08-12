@@ -73,7 +73,7 @@ namespace guiWords
         {
             //Set Cursor
             Cursor = Cursors.Wait;
-#region Initial Checks
+            #region Initial Checks
             //Check that txt_Query is not empty
             if (txt_Query.Text == "")
             {
@@ -94,9 +94,9 @@ namespace guiWords
                     return;
                 }
             }
-#endregion
+            #endregion
             //Variables and such
-#region String Manipulation
+            #region String Manipulation
             List<string> qTerms = new List<string>();
             //Regular Expressions to deal with u/v and i/j spelling variations.
             string regI = "([^aeiou])?(i)([aeiouv])";
@@ -116,8 +116,8 @@ namespace guiWords
                 qTerms.Add(Regex.Replace(lquery[i], regB, "$1bb$3"));
                 qTerms = qTerms.Distinct().ToList();
             }
-#endregion
-#region Search and Build
+            #endregion
+            #region Search and Build
             //Run the search and collect the results
             int totWords = 0;
             int totForms = 0;
@@ -162,7 +162,7 @@ namespace guiWords
             
             //add results to history
             searchHistory.Add(s);
-#endregion
+            #endregion
             //Reset Cursor
             Cursor = Cursors.Arrow;
             resetUI();
@@ -197,14 +197,14 @@ namespace guiWords
             System.Diagnostics.Process.Start("http://www.perseus.tufts.edu/hopper/morph?l=" + form + "&la=la");
         }
         //Open all forms window
-        private void btn_ViewAllForms(object sender, RoutedEventArgs e)
-        {
-            Button b = sender as Button;
-            int d_id = int.Parse(b.Tag.ToString());
-            AllForms f = new AllForms(d_id);
-            f.Show();
-        }
-#endregion
+        //private void btn_ViewAllForms(object sender, RoutedEventArgs e)
+        //{
+        //    Button b = sender as Button;
+        //    int d_id = int.Parse(b.Tag.ToString());
+        //    AllForms f = new AllForms(d_id);
+        //    f.Show();
+        //}
+        #endregion
         #region Public Methods
         //Public Methods
         public qHistory SearchForms(List<string> qTerms, string q)
@@ -215,7 +215,11 @@ namespace guiWords
             {
                 using (guiWordsDBMDataContext gWord = new guiWordsDBMDataContext(con))
                 {
+                    #if DEBUG
                     List<FormsView> d = gWord.sp_guiWords_Parse(query).ToList();
+                    #else
+                    List<FormsView> d = gWord.winkert_sp_guiWords_Parse(query).ToList();
+                    #endif
                     //List<FormsView> d = gWord.FormsViews.ToList();
                     //var r = from all in d
                     //        join f in qTerms on all.wf_Form equals f
@@ -311,6 +315,7 @@ namespace guiWords
                 //Grid.SetColumn(wAllForms, 1);
                 //wLinkGrid.Children.Add(wAllForms);
                 #endregion
+                #region Perseus
                 //Perseus button
                 wPerseus.Content = "Perseus Entry";
                 wPerseus.Width = 150;
@@ -318,6 +323,7 @@ namespace guiWords
                 wPerseus.Click += btn_OpenPerseus;
                 Grid.SetColumn(wPerseus, 2);
                 wLinkGrid.Children.Add(wPerseus);
+                #endregion
                 //Result set text
                 wSet.Margin = tMargins;
                 wSet.FontSize = 18;
