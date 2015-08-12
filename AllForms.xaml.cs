@@ -1,4 +1,6 @@
-﻿using System;
+#define DEBUG
+//#undef DEBUG
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -70,7 +72,11 @@ namespace guiWords
             List<FormsView> AllForms;
             using (guiWordsDBMDataContext gWord = new guiWordsDBMDataContext(MainWindow.con))
             {
+                #if DEBUG
                 AllForms = gWord.sp_AllForms(d).ToList();
+                #else
+                AllForms = gWord.winkert_sp_AllForms(d).ToList();
+                #endif
             }
             return AllForms;
         }
