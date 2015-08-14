@@ -308,12 +308,12 @@ namespace guiWords
                 /// I need to refactor the entire thing before any sort of release is possible.
                 #region All Forms
                 //All Forms button
-                //wAllForms.Content = "All Forms";
-                //wAllForms.Width = 150;
-                //wAllForms.Tag = s.dWordIDs[i];
-                //wAllForms.Click += btn_ViewAllForms;
-                //Grid.SetColumn(wAllForms, 1);
-                //wLinkGrid.Children.Add(wAllForms);
+                wAllForms.Content = "All Forms";
+                wAllForms.Width = 150;
+                wAllForms.Tag = s.dWordIDs[i];
+                wAllForms.Click += btn_ViewAllForms;
+                Grid.SetColumn(wAllForms, 1);
+                wLinkGrid.Children.Add(wAllForms);
                 #endregion
                 //Perseus button
                 wPerseus.Content = "Perseus Entry";
