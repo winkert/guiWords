@@ -1,7 +1,7 @@
 ﻿<Window x:Class="guiWords.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="guiWords" Height="480" Width="720" ResizeMode="CanMinimize" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Icon="SPQR.ICO">
+        Title="guiWords" Height="480" Width="720" ResizeMode="CanMinimize" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" Icon="SPQR.ICO" FontFamily="Palatino Linotype" FontSize="16">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" ShowGridLines="True" UseLayoutRounding="False">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

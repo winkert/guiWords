@@ -16,7 +16,7 @@ namespace guiWords
         }
         public Form(FormsView form)
         {
-            wForm = form.d_Word;
+            wForm = form.wf_Form;
             wPartOfSpeech = form.part_Name.ParseEnum<PartsOfSpeech>();
             wCase = form.nc_Name.ParseEnum<Cases>();
             wNumber = form.num_Name.ParseEnum<Numbers>();
@@ -27,245 +27,109 @@ namespace guiWords
             wVoice = form.vv_Name.ParseEnum<Voices>();
         }
         #region Fields
-        string wForm;
+        public string wForm;
         PartsOfSpeech wPartOfSpeech;
-        Cases wCase;
-        Numbers wNumber;
-        Genders wGender;
-        Persons wPerson;
-        Tenses wTense;
-        Moods wMood;
-        Voices wVoice;
+        public Cases wCase;
+        public Numbers wNumber;
+        public Genders wGender;
+        public Persons wPerson;
+        public Tenses wTense;
+        public Moods wMood;
+        public Voices wVoice;
         #endregion
-
-
-    }
-    public class Forms
-    {
-        #region Constructors
-        public Forms()
+        #region Methods
+        public string getFormType()
         {
-
-        }
-        public Forms(List<FormsView> forms)
-        {
-            partofspeech = forms[0].part_Name;
-            foreach (FormsView f in forms)
+            switch(wPartOfSpeech)
             {
-                words.Add(f.wf_Form);
-                cases.Add(f.nc_Name);
-                numbers.Add(f.num_Name);
-                genders.Add(f.ge_Name);
-                persons.Add(f.vp_Name);
-                tenses.Add(f.vt_Name);
-                moods.Add(f.vm_Name);
-                voices.Add(f.vv_Name);
-                count++;
+                case PartsOfSpeech.ADJ:
+                case PartsOfSpeech.N:
+                case PartsOfSpeech.NUM:
+                case PartsOfSpeech.PRON:
+                    return wCase.GetDescription();
+                case PartsOfSpeech.V:
+                    if(wPerson.GetDescription() == "None" || wPerson.GetDescription() == "X")
+                    {
+                        return wCase.GetDescription();
+                    }
+                    else
+                    {
+                        return wPerson.GetDescription();
+                    }
+                default:
+                    return string.Empty;
             }
-        }
-        #endregion
-        #region Variables
-        public string partofspeech;
-        public List<string> words = new List<string>();
-        public List<string> cases = new List<string>();
-        public List<string> numbers = new List<string>();
-        public List<string> genders = new List<string>();
-        public List<string> persons = new List<string>();
-        public List<string> tenses = new List<string>();
-        public List<string> moods = new List<string>();
-        public List<string> voices = new List<string>();
-        public PartsOfSpeech wPartOfSpeech = new PartsOfSpeech();
-        public List<Cases> wCases = new List<Cases>();
-        public List<Numbers> wNumbers = new List<Numbers>();
-        public List<Genders> wGenders = new List<Genders>();
-        public List<Persons> wPersons = new List<Persons>();
-        public List<Tenses> wTenses = new List<Tenses>();
-        public List<Moods> wMoods = new List<Moods>();
-        public List<Voices> wVoices = new List<Voices>();
-        public int count = 0;
-        #endregion
-        #region Public Functions
-        public void addForm(Forms f, int i)
-        {
-            words.Add(f.words[i]);
-            cases.Add(f.cases[i]);
-            numbers.Add(f.numbers[i]);
-            genders.Add(f.genders[i]);
-            persons.Add(f.persons[i]);
-            tenses.Add(f.tenses[i]);
-            moods.Add(f.moods[i]);
-            voices.Add(f.voices[i]);
-            count++;
-        }
-        public void addForm(string w, string c, string n, string g, string p, string t, string m, string v)
-        {
-            words.Add(w);
-            cases.Add(c);
-            numbers.Add(n);
-            genders.Add(g);
-            persons.Add(p);
-            tenses.Add(t);
-            moods.Add(m);
-            voices.Add(v);
-            count++;
         }
         #endregion
     }
     #region Static Classes
     public static class FormsExtensions
     {
-        public static Forms pickForms(this Forms f, string filter, string criteria)
+        /// <summary>
+        /// Universal function which takes the criteria selected and produces only the forms of the word which match that criteria.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="type">The Enum criteria</param>
+        /// <returns>new List</returns>
+        public static List<Form> SplitBy<T>(this List<Form> forms, T type)
         {
-            Forms lessForms = new Forms();
-            switch (filter)
+            List<Form> newList = new List<Form>();
+            if(type is Numbers)
             {
-                //case "Case":
-                //    lessForms = splitOnCase(f, criteria);
-                //    break;
-                case "Number":
-                    lessForms = splitOnNumber(f, criteria);
-                    break;
-                case "Gender":
-                    lessForms = splitOnGender(f, criteria);
-                    break;
-                //case "Person":
-                //    lessForms = splitOnPerson(f, criteria);
-                //    break;
-                case "Tense":
-                    lessForms = splitOnTense(f, criteria);
-                    break;
-                case "Mood":
-                    lessForms = splitOnMood(f, criteria);
-                    break;
-                case "Voice":
-                    lessForms = splitOnVoice(f, criteria);
-                    break;
-                default:
-                    break;
+                newList = forms.Where(f => f.wNumber.Equals(type)).Distinct().ToList();
             }
-            return lessForms;
-        }
-        #region Splitting Functions
-        //public static Forms splitOnCase(Forms f, String criteria)
-        //{
-        //    Forms forms = new Forms();
-        //    for (int i = 0; i < f.count; i++)
-        //    {
-        //        if (f.cases[i] == criteria)
-        //        {
-        //            forms.addForm(f, i);
-        //        }
-        //    }
-        //    return forms;
-        //}
-        public static Forms splitOnNumber(this Forms f, Numbers n)
-        {
-            Forms forms = new Forms();
-            for (int i = 0; i < f.count; i++)
+            if(type is Genders)
             {
-                if (f.wNumbers[i] == n)
-                {
-                    forms.addForm(f, i);
-                }
+                newList = forms.Where(f => f.wGender.Equals(type)).Distinct().ToList();
             }
-            return forms;
-        }
-        public static Forms splitOnNumber(Forms f, string criteria)
-        {
-            Forms forms = new Forms();
-            for (int i = 0; i < f.count; i++)
+            if (type is Tenses)
             {
-                if (f.numbers[i] == criteria)
-                {
-                    forms.addForm(f, i);
-                }
+                newList = forms.Where(f => f.wTense.Equals(type)).Distinct().ToList();
             }
-            return forms;
-        }
-        public static Forms splitOnGender(Forms f, string criteria)
-        {
-            Forms forms = new Forms();
-            for (int i = 0; i < f.count; i++)
+            if (type is Moods)
             {
-                if (f.genders[i] == criteria)
-                {
-                    forms.addForm(f, i);
-                }
+                newList = forms.Where(f => f.wMood.Equals(type)).Distinct().ToList();
             }
-            return forms;
-        }
-        //public static Forms splitOnPerson(Forms f, String criteria)
-        //{
-        //    Forms forms = new Forms();
-        //    for (int i = 0; i < f.count; i++)
-        //    {
-        //        if (f.persons[i] == criteria)
-        //        {
-        //            forms.addForm(f, i);
-        //        }
-        //    }
-        //    return forms;
-        //}
-        public static Forms splitOnTense(Forms f, string criteria)
-        {
-            Forms forms = new Forms();
-            for (int i = 0; i < f.count; i++)
+            if (type is Voices)
             {
-                if (f.tenses[i] == criteria)
-                {
-                    forms.addForm(f, i);
-                }
+                newList = forms.Where(f => f.wVoice.Equals(type)).Distinct().ToList();
             }
-            return forms;
+            return newList;
         }
-        public static Forms splitOnMood(Forms f, string criteria)
+        /// <summary>
+        /// Universal function which takes the criteria selected and produces only the forms of the word which match that criteria.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="type">The Enum criteria as an array</param>
+        /// <returns>new List</returns>
+        public static List<Form> SplitBy<T>(this List<Form> forms, List<T> types)
         {
-            Forms forms = new Forms();
-            for (int i = 0; i < f.count; i++)
+            List<Form> newList = new List<Form>();
+            if (types is List<Numbers>)
             {
-                if (f.moods[i] == criteria)
-                {
-                    forms.addForm(f, i);
-                }
+                newList = forms.Where(f => types.Contains((T)(object)f.wNumber)).Distinct().ToList();
             }
-            return forms;
-        }
-        public static Forms splitOnVoice(Forms f, string criteria)
-        {
-            Forms forms = new Forms();
-            for (int i = 0; i < f.count; i++)
+            if (types is List<Genders>)
             {
-                if (f.voices[i] == criteria)
-                {
-                    forms.addForm(f, i);
-                }
+                newList = forms.Where(f => types.Contains((T)(object)f.wGender)).Distinct().ToList();
             }
-            return forms;
-        }
-        #endregion
-        public static int countFormsLike(List<string> forms, string filter)
-        {
-            int count = 0;
-            foreach (string f in forms)
+            if (types is List<Tenses>)
             {
-                if (f == filter)
-                {
-                    count++;
-                }
+                newList = forms.Where(f => types.Contains((T)(object)f.wTense)).Distinct().ToList();
             }
-            return count;
-        }
-        public static int countFormSets(List<string> forms)
-        {
-            int count = 0;
-            List<string> distinctForms = (List<string>)forms.Distinct();
-            count = distinctForms.Count;
-            return count;
+            if (types is List<Moods>)
+            {
+                newList = forms.Where(f => types.Contains((T)(object)f.wMood)).Distinct().ToList();
+            }
+            if (types is List<Voices>)
+            {
+                newList = forms.Where(f => types.Contains((T)(object)f.wVoice)).Distinct().ToList();
+            }
+            return newList;
         }
     }
     public static class EnumExtension
     {
-        #region Enum Methods
         /// <summary>
         /// Returns the Description attribute of an enum value if that attribute exists. Otherwise, it returns the name.
         /// </summary>
@@ -281,7 +145,7 @@ namespace guiWords
                : enumValue.ToString();
         }
         /// <summary>
-        /// Returns an Enum with the description of the string. Otherwise it returns an Enum with the name of the string.
+        /// Returns an Enum with the description matching the string. Otherwise it returns an Enum with the name matching the string.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="stringVal"></param>
@@ -289,6 +153,10 @@ namespace guiWords
         /// <returns>Enum</returns>
         public static T ParseEnum<T>(this string stringVal)
         {
+            if(stringVal == null)
+            {
+                return (T)Enum.Parse(typeof(T), "None");
+            }
             Type type = typeof(T);
             if (!type.IsEnum) throw new InvalidOperationException();
             System.Reflection.MemberInfo[] fields = type.GetFields();
@@ -303,7 +171,6 @@ namespace guiWords
             }
             return (T)Enum.Parse(typeof(T), stringVal);
         }
-        #endregion
     }
     public static class OtherExtensions
     {
@@ -322,14 +189,24 @@ namespace guiWords
     public enum PartsOfSpeech
     {
         None = 0,
+        [Description("Verb")]
         V,
+        [Description("Noun")]
         N,
+        [Description("Adjective")]
         ADJ,
+        [Description("Numeral")]
         NUM,
+        [Description("Pronoun")]
         PRON,
+        [Description("Adverb")]
         ADV,
+        [Description("Interjection")]
         INTERJ,
-        CONJ
+        [Description("Conjunction")]
+        CONJ,
+        [Description("Preposition")]
+        PREP
     }
     public enum Persons
     {
@@ -339,23 +216,26 @@ namespace guiWords
         [Description("2")]
         Second,
         [Description("3")]
-        Third
+        Third,
+        X
     }
     public enum Tenses
     {
         None = 0,
         PRES,
         FUT,
-        IMPF,
+        IMPERF,
         PERF,
         PLUP,
-        FUTP
+        FUTP,
+        ALL
     }
     public enum Voices
     {
         None = 0,
         ACTIVE,
-        PASSIVE
+        PASSIVE,
+        ALL
     }
     public enum Moods
     {
@@ -363,34 +243,38 @@ namespace guiWords
         IND,
         INF,
         IMP,
-        SUP,
-        PPL
+        SUB,
+        PPL,
+        SUPINE
 
     }
     public enum Numbers
     {
-        X = 0,
+        None = 0,
         S,
-        P
+        P,
+        X
     }
     public enum Cases
     {
-        X = 0,
+        None = 0,
         NOM,
         GEN,
         DAT,
         ACC,
         ABL,
         LOC,
-        VOC
+        VOC,
+        X
     }
     public enum Genders
     {
-        X= 0,
+        None= 0,
         M,
         F,
         N,
-        C
+        C,
+        X
     }
     #endregion
 }

@@ -37,7 +37,6 @@ namespace guiWords
                 }
                 catch (Exception e)
                 {
-                    
                     MessageBox.Show(e.Message);
                 }
                 finally
@@ -55,7 +54,6 @@ namespace guiWords
         public Thickness tBorder = new Thickness(1);
         public Thickness noBorder = new Thickness(0);
         public List<qHistory> searchHistory = new List<qHistory>();
-
         #if DEBUG
         public static String con = "Data Source=SUPERCOMPUTER;Integrated Security=True;Connect Timeout=15;Encrypt=False;Initial Catalog=Words;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         #else
@@ -199,14 +197,21 @@ namespace guiWords
         ///<summary>Open all forms window</summary>
         private void btn_ViewAllForms(object sender, RoutedEventArgs e)
         {
+            Cursor = Cursors.Wait;
             Button b = sender as Button;
             int d_id = int.Parse(b.Tag.ToString());
             AllForms f = new AllForms(d_id);
             f.Show();
+            Cursor = Cursors.Arrow;
         }
         #endregion
-        #region Public Methods
-        ///<summary>Public Methods</summary>
+        #region Methods
+        /// <summary>
+        /// Calls a stored procedure which searches for the word entered. Creates a history item for the search.
+        /// </summary>
+        /// <param name="qTerms">List of terms to search. This includes variant spellings</param>
+        /// <param name="q">Query; passed into the history object</param>
+        /// <returns>new qHistory(q)</returns>
         public qHistory SearchForms(List<string> qTerms, string q)
         {
             string query = string.Join(",", qTerms);
@@ -266,7 +271,7 @@ namespace guiWords
             //return the result set
             return s;
         }
-        public void BuildControls(qHistory s)
+        private void BuildControls(qHistory s)
         {
             int totWords = s.dWordIDs.Count();
             int totForms = s.dForms.Count();
@@ -328,6 +333,7 @@ namespace guiWords
                 wSet.FontFamily = fHeader;
                 wSet.Header = s.dWords[i] + (char)9 + s.pPart[i] + (char)9 + s.pConj[i] + s.pDecl[i];
                 wSet.HorizontalAlignment = HorizontalAlignment.Left;
+                wSet.Width = 600;
                 wSet.BorderThickness = tBorder;
                 wSet.BorderBrush = new SolidColorBrush(Colors.LightSteelBlue);
                 wSet.IsExpanded = false;
@@ -366,7 +372,7 @@ namespace guiWords
                 ResultGrid.Children.Add(wSet);
             }
         }
-        public void resetUI()
+        private void resetUI()
         {
             txt_Query.Text = string.Empty;
             txt_Query.Focus();

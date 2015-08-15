@@ -22,329 +22,386 @@ namespace guiWords
         public AllForms(int d_ID)
         {
             InitializeComponent();
-            forms = getForms(d_ID);
-            //eachForm = getForms(d_ID);
-            word = forms[0].wf_Form;
-            //remove
-            partCode = forms[0].part_Name;
-            wPartCode = forms[0].part_Name.ParseEnum<PartsOfSpeech>();
-            //Remove
-            allForms = new Forms(forms);
-            buildGrid(partCode);
+            eachForm = getFormsFromDatabase(d_ID);
+            word = DBforms[0].wf_Form;
+            wPartCode = DBforms[0].part_Name.ParseEnum<PartsOfSpeech>();
+            buildAllForms(eachForm, wPartCode);
             Title = "All Forms of " + word;
         }
         #endregion
         #region Publics
-        private List<FormsView> forms;
+        private List<FormsView> DBforms;
         private List<Form> eachForm;
-        //Remove
-        public Forms allForms;
         public string word;
         private PartsOfSpeech wPartCode;
-        //Remove
-        public string partCode;
         public FontFamily fForms = new FontFamily("Palatino Linotype");
         public FontFamily fHead = new FontFamily("Palatino Linotype Bold");
-        public GridLength fGridLength = new GridLength(200);
+        public GridLength fGridLength = new GridLength(1, GridUnitType.Auto);
         #endregion
-        #region Public Methods
-        public void setGridWidth(ref Grid g)
-        {
-            for (int i = 0; i < g.ColumnDefinitions.Count; i++)
-            {
-                g.ColumnDefinitions[i].Width = fGridLength;
-            }
-        }
-        public void fillPanel(ref StackPanel panel, List<string> form, List<string> type, string other = "")
-        {
-            for (int i = 0; i < form.Count; i++)
-            {
-                TextBlock line = new TextBlock();
-                line.FontFamily = fForms;
-                line.FontSize = 16;
-                line.Padding = new Thickness(5,1,5,1);
-                line.Text = type[i] + " " + other + " :   " + form[i];
-                panel.Children.Add(line);
-            }
-        }
-        public List<FormsView> getForms(int d)
-        {
-            List<FormsView> AllForms;
-            using (guiWordsDBMDataContext gWord = new guiWordsDBMDataContext(MainWindow.con))
-            {
-                #if DEBUG
-                AllForms = gWord.sp_AllForms(d).ToList();
-                #else
-                AllForms = gWord.winkert_sp_AllForms(d).ToList();
-                #endif
-            }
-            return AllForms;
-        }
+        #region Methods
         /// <summary>
         /// Get Forms from Database and put them into a list of Forms
         /// </summary>
         /// <param name="d">d_ID</param>
         /// <returns>List of Forms</returns>
-        //public List<Form> getForms(int d)
-        //{
-        //    List<FormsView> AllForms;
-        //    using (guiWordsDBMDataContext gWord = new guiWordsDBMDataContext(MainWindow.con))
-        //    {
-        //        AllForms = gWord.sp_AllForms(d).ToList();
-        //    }
-        //    List<Form> forms = new List<Form>();
-        //    foreach (FormsView form in AllForms)
-        //    {
-        //        forms.Add(new Form(form));
-        //    }
-        //    return forms;
-        //}
-        public TextBlock createHeader (string text)
+        private List<Form> getFormsFromDatabase(int d)
         {
-            TextBlock header = new TextBlock();
-            header.Text = text;
-            header.FontFamily = fHead;
-            header.FontSize = 18;
-            return header;
-        }
-        //Verb Functions
-        #region All Verb Forms
-        public Expander buildVerbs(Forms forms, string mainHeader)
-        {
-            Expander verbSet = new Expander();
-            verbSet.Header = mainHeader;
-            StackPanel holder = new StackPanel();
-            //1. Split into voices
-            //2. For each voice, create a grid in the expander/stackpanel
-            List<Forms> verbSets = new List<Forms>();
-            verbSets.Add(splitVerbByVoice(forms, "ACTIVE"));
-            verbSets.Add(splitVerbByVoice(forms, "PASSIVE"));
-            foreach (Forms f in verbSets)
+            List<FormsView> AllForms;
+            using (guiWordsDBMDataContext gWord = new guiWordsDBMDataContext(MainWindow.con))
             {
-                List<string> tensesInVerb = f.tenses.Distinct().ToList();
-                int numTenses = tensesInVerb.Count;
-                Grid g = new Grid();
-                for (int i = 0; i < numTenses; i++)
-                {
-                    g.ColumnDefinitions.Add(new ColumnDefinition());
-                }
-                setGridWidth(ref g);
-                g.RowDefinitions.Add(new RowDefinition());
-                g.RowDefinitions.Add(new RowDefinition());
-
-                splitVerbByTense(f, ref g);
-
-                holder.Children.Add(g);
+                AllForms = gWord.sp_AllForms(d).ToList();
             }
-
-            //Add the grids to the panel and return it the expander
-            
-            verbSet.Content = holder;
-            return verbSet;
-        }
-        public Forms splitVerbByVoice(Forms forms, string voice)
-        {
-            return forms.pickForms( "Voice", voice);
-        }
-        public void splitVerbByTense(Forms forms, ref Grid set)
-        {
-            List<Forms> formsByTense = new List<Forms>();
-            //Add each set of forms according to mood
-            formsByTense.Add(forms.pickForms( "Tense", "PRES"));
-            formsByTense.Add(forms.pickForms( "Tense", "IMPF"));
-            formsByTense.Add(forms.pickForms( "Tense", "FUT"));
-            formsByTense.Add(forms.pickForms( "Tense", "PERF"));
-            formsByTense.Add(forms.pickForms( "Tense", "PLUP"));
-            formsByTense.Add(forms.pickForms( "Tense", "FUTP"));
-            //int maxi = g.ColumnDefinitions.Count * 2
-            //int i = 0
-            //i+=2
-            //IF(i>ROUNDUP(maxi/2,0)-1,1,0)
-            //IF(i>ROUNDUP(maxi/2,0)-1,i-(ROUNDUP(maxi/2,0)),i)
-            //row2 = row
-            //column2 = column + 1
-            int maxI = set.ColumnDefinitions.Count * 2;
-            int f = (int)Math.Round((double)maxI / 2, MidpointRounding.AwayFromZero) - 1;
-            for (int i = 0; i < maxI; i+=2)
+            List<Form> forms = new List<Form>();
+            foreach (FormsView form in AllForms)
             {
-                StackPanel singular = splitVerbByNumber(formsByTense[f], "Singular", formsByTense[f].numbers);
-                StackPanel plural = splitVerbByNumber(formsByTense[f], "Plural", formsByTense[f].numbers);
-
-                //Add the panels to the grid based on the number
-                //This sets it up to be a two rows by 6 columns
-                int column;
-                int row;
-                if (i > f-1)
-                {
-                    column = i - f;
-                    row = 1;
-                }
-                else
-                {
-                    column = i;
-                    row = 0;
-                }
-
-                //Put it all together
-                Grid.SetColumn(singular, column);
-                Grid.SetRow(singular, row);
-                set.Children.Add(singular);
-                Grid.SetColumn(plural, column + 1);
-                Grid.SetRow(plural, row);
-                set.Children.Add(plural);
-
+                forms.Add(new Form(form));
             }
+            return forms;
         }
-        public StackPanel splitVerbByNumber(Forms forms, string numberHeader, List<string> criteria)
+        /// <summary>
+        /// Takes the form and part of speech and produce a grid of forms ordered logically.
+        /// </summary>
+        /// <param name="forms">List of Form objects</param>
+        private void buildAllForms(List<Form> forms, PartsOfSpeech pos)
         {
-            StackPanel verbSet = new StackPanel();
-            Forms splitForms = forms.pickForms( "Number", criteria[0]);
-            if (criteria[0] != "X")
+            /// Step 1: Determine the part of speech
+            /// Step 2: Split up the list into each logical set
+            ///             Nouns: Number
+            ///             Adjectives, Pronouns, Numbers: Gender, Number
+            ///             Verbs: Voice, Mood, Tense, Number
+            /// Step 3: Create an expander
+            /// Step 4: Split up the grid in the expander based on needs
+            /// Step 5: For Verbs use multiple expanders
+            ///         multiply by number of distinct voices, moods, and numbers for nouns
+            /// Step 6: Populate the grids/panels/expanders with the forms ordered out based on the breakdown
+            switch (pos)
             {
-                TextBlock header = new TextBlock();
-                header.Text = numberHeader;
-                header.FontFamily = fHead;
-                verbSet.Children.Add(header); 
-            }
-            for (int i = 0; i < splitForms.words.Count; i++)
-            {
-                TextBlock wordset = new TextBlock();
-                wordset.Text = splitForms.persons[i] + " : " + splitForms.words[i];
-                verbSet.Children.Add(wordset);
-            }
-            return verbSet;
-        }
-        #endregion
-        //New functions to deal with Forms
-        #region UIDesign Functions
-        public void displayNouns(ref Grid g)
-        {
-            Forms singularForms = allForms.pickForms("Number", "S");
-            Forms pluralForms = allForms.pickForms("Number", "P");
-            StackPanel sgPanel = new StackPanel();
-            StackPanel plPanel = new StackPanel();
-            sgPanel.Children.Add(createHeader("Singular"));
-            plPanel.Children.Add(createHeader("Plural"));
-            fillPanel(ref sgPanel, singularForms.words, singularForms.cases);
-            fillPanel(ref plPanel, pluralForms.words, pluralForms.cases);
-            Grid.SetColumn(sgPanel, 0);
-            Grid.SetColumn(plPanel, 1);
-            g.Children.Add(sgPanel);
-            g.Children.Add(plPanel);
-        }
-        public void displayVerbs(ref Grid g)
-        {
-            StackPanel verbPanel = new StackPanel();
-            List<Forms> formsByMood = new List<Forms>();
-            //Add each set of forms according to mood
-            formsByMood.Add(allForms.pickForms("Mood", "IND"));
-            formsByMood.Add(allForms.pickForms("Mood", "INF"));
-            formsByMood.Add(allForms.pickForms("Mood", "IMP"));
-            formsByMood.Add(allForms.pickForms("Mood", "SUB"));
-            formsByMood.Add(allForms.pickForms("Mood", "PPL"));
-            //for each mood, pass into a function which will create the expander set
-            for (int i = 0; i < formsByMood.Count; i++ )
-            {
-                Forms f = formsByMood[i];
-                if (f.words.Count > 0)
-                {
-                    Expander verbSet = buildVerbs(f, f.moods[0]);
-                    verbPanel.Children.Add(verbSet); 
-                }
-            }
-            Grid.SetColumn(verbPanel, 0);
-            Grid.SetRow(verbPanel, 0);
-            g.Children.Add(verbPanel);
-        }
-        public void displayAdjectives(ref Grid g)
-        {
-
-        }
-        public void displayNumbers(ref Grid g)
-        {
-
-        }
-        public void displayPronouns(ref Grid g)
-        {
-
-        }
-        public void displayAdverbs(ref Grid g)
-        {
-
-        }
-        public void displaySingleForms(ref Grid g)
-        {
-
-        }
-        #endregion
-        //Main build function called by instatiation
-        //public void buildGrid(PartsOfSpeech pos)
-        public void buildGrid(string pos)
-        {
-            switch(pos)
-            {
-                    //For each part of speech the following happens:
-                    //      A new list of forms is produced for each grid couplet (S/P)
-                    //      That list and the grid for this word is passed into the function fillGrid
-                    //      From there, the list of forms is put into two list of strings and passed
-                    //      into the function fillPanel
-                    //      This is done for each type of word (Gender, Tense, Mood, Voice, etc)
-                    //      Each case has a different kind of loop which passes different list of forms
-                case "N":
-                //case PartsOfSpeech.N:
-                    //For Nouns:
-                    //      This is the simple one.
-                    #region Noun
-                    #region Components for Nouns
-                    Grid nounGrid = new Grid();
-                    #endregion
-                    #region Build Grid
-                    nounGrid.ColumnDefinitions.Add(new ColumnDefinition());
-                    nounGrid.ColumnDefinitions.Add(new ColumnDefinition());
-                    nounGrid.RowDefinitions.Add(new RowDefinition());
-                    setGridWidth(ref nounGrid);
-                    #endregion
-                    #region Add Components
-                    displayNouns(ref nounGrid);
-                    grd_AllForms.Children.Add(nounGrid);
-                    #endregion
+                case PartsOfSpeech.N:
+                case PartsOfSpeech.ADJ:
+                case PartsOfSpeech.PRON:
+                case PartsOfSpeech.NUM:
+                    List<Form> sForms = forms.OrderBy(x => x.wCase).ToList();
+                    Expander Set = createExpander(pos, word);
+                    Set.Content = createGrid(forms, pos);
+                    grd_AllForms.Children.Add(Set);
+                    //Numbers
                     break;
-                    #endregion
-                case "V":
-                //case PartsOfSpeech.V:
-                    //For Verbs:
-                    //      There are (6 * 2) + (4 * 2) + (2 + (3 * 3)) sets of forms (31) if I don't count Infinitives and Imperatives
-                    //      Uses Expanders to separate each mood
-                    #region Verb
-                    #region Components for Verbs
-                    Grid verbGrid = new Grid();
-                    #endregion
-                    #region Build Grid
-                    verbGrid.ColumnDefinitions.Add(new ColumnDefinition());
-                    verbGrid.RowDefinitions.Add(new RowDefinition());
-                    #endregion
-                    #region Add Components
-                    displayVerbs(ref verbGrid);
-                    grd_AllForms.Children.Add(verbGrid);
-                    #endregion
+                case PartsOfSpeech.V:
+                    //Verbs
+                    List<Form> vForms = forms.OrderBy(x => x.wPerson).ToList();
+                    List<Tenses> PrimaryTenses = new List<Tenses>() { Tenses.PRES, Tenses.IMPERF, Tenses.FUT };
+                    List<Tenses> SecondaryTenses = new List<Tenses>() { Tenses.PERF, Tenses.PLUP, Tenses.FUTP };
+                    List<Moods> OtherMoods = new List<Moods>() { Moods.IMP, Moods.INF, Moods.SUPINE };
+                    //Create expanders to hold the forms
+                    Expander vPrimaryActiveIndicative = createExpander(word + " - Verb - Primary Active Indicative");
+                    Expander vSecondaryActiveIndicative = createExpander(word + " - Verb - Secondary Active Indicative");
+                    Expander vPrimaryPassiveIndicative = createExpander(word + " - Verb - Primary Passive Indicative");
+                    //Expander vSecondaryPassiveIndicative = createExpander(word + " - Verb - Secondary Passive Indicative");
+                    Expander vPrimaryActiveSubjunctive = createExpander(word + " - Verb - Primary Active Subjunctive");
+                    Expander vSecondaryActiveSubjunctive = createExpander(word + " - Verb - Secondary Active Subjunctive");
+                    Expander vPrimaryPassiveSubjunctive = createExpander(word + " - Verb - Primary Passive Subjunctive");
+                    //Expander vSecondaryPassiveSubjunctive = createExpander(word + " - Verb - Secondary Passive Subjunctive");
+                    Expander vPrimaryParticiples = createExpander(word + " - Verb - Primary Participles");
+                    Expander vSecondaryParticiples = createExpander(word + " - Verb - Secondary Participles");
+                    Expander vRemainingForms = createExpander(pos, word);
+                    //Add content to the expanders
+                    vPrimaryActiveIndicative.Content = createGrid(vForms.SplitBy(PrimaryTenses).SplitBy(Voices.ACTIVE).SplitBy(Moods.IND), pos);
+                    vSecondaryActiveIndicative.Content = createGrid(vForms.SplitBy(SecondaryTenses).SplitBy(Voices.ACTIVE).SplitBy(Moods.IND), pos);
+                    vPrimaryPassiveIndicative.Content = createGrid(vForms.SplitBy(PrimaryTenses).SplitBy(Voices.PASSIVE).SplitBy(Moods.IND), pos);
+                    //vSecondaryPassiveIndicative.Content = createGrid(vForms.SplitBy(SecondaryTenses).SplitBy(Voices.PASSIVE).SplitBy(Moods.IND), pos);
+                    vPrimaryActiveSubjunctive.Content = createGrid(vForms.SplitBy(PrimaryTenses).SplitBy(Voices.ACTIVE).SplitBy(Moods.SUB), pos);
+                    vSecondaryActiveSubjunctive.Content = createGrid(vForms.SplitBy(SecondaryTenses).SplitBy(Voices.ACTIVE).SplitBy(Moods.SUB), pos);
+                    vPrimaryPassiveSubjunctive.Content = createGrid(vForms.SplitBy(PrimaryTenses).SplitBy(Voices.PASSIVE).SplitBy(Moods.SUB), pos);
+                    //vSecondaryPassiveSubjunctive.Content = createGrid(vForms.SplitBy(SecondaryTenses).SplitBy(Voices.PASSIVE).SplitBy(Moods.SUB), pos);
+                    vPrimaryParticiples.Content = createGrid(vForms.SplitBy(PrimaryTenses).SplitBy(Moods.PPL), pos);
+                    vSecondaryParticiples.Content = createGrid(vForms.SplitBy(SecondaryTenses).SplitBy(Moods.PPL), pos);
+                    vRemainingForms.Content = createGrid(vForms.SplitBy(OtherMoods), pos);
+                    //Add the expanders to the panel
+                    grd_AllForms.Children.Add(vPrimaryActiveIndicative);
+                    grd_AllForms.Children.Add(vSecondaryActiveIndicative);
+                    grd_AllForms.Children.Add(vPrimaryPassiveIndicative);
+                    //grd_AllForms.Children.Add(vSecondaryPassiveIndicative);
+                    grd_AllForms.Children.Add(vPrimaryActiveSubjunctive);
+                    grd_AllForms.Children.Add(vSecondaryActiveSubjunctive);
+                    grd_AllForms.Children.Add(vPrimaryPassiveSubjunctive);
+                    //grd_AllForms.Children.Add(vSecondaryPassiveSubjunctive);
+                    grd_AllForms.Children.Add(vPrimaryParticiples);
+                    grd_AllForms.Children.Add(vSecondaryParticiples);
+                    grd_AllForms.Children.Add(vRemainingForms);
                     break;
-                    #endregion
-                case "ADJ":
-                //case PartsOfSpeech.ADJ:
-                    break;
-                case "NUM":
-                //case PartsOfSpeech.NUM:
-                    break;
-                case "PRON":
-                //case PartsOfSpeech.PRON:
-                    break;
-                case "ADV":
-                //case PartsOfSpeech.ADV:
+                case PartsOfSpeech.None:
+                    //Throw an error?
                     break;
                 default:
-                    //Everything else is really simple. They are a single form.
+                    //Single form.
+                    Expander wForm = createExpander(pos, word);
+                    wForm.Content = createGrid(forms, pos);
+                    grd_AllForms.Children.Add(wForm);
                     break;
             }
+            //Add Result to window
+
+        }
+        /// <summary>
+        /// Creates a grid for the forms to be added to an expander.
+        /// </summary>
+        /// <param name="forms">The forms to be added to this grid</param>
+        /// <param name="pos">Part of Speech</param>
+        /// <returns>new Grid()</returns>
+        private Grid createGrid(List<Form> forms, PartsOfSpeech pos)
+        {
+            if(forms.Count < 1)
+            {
+                return new Grid();
+            }
+            Grid formGrid = new Grid();
+            switch (pos)
+            {
+                case PartsOfSpeech.N:
+                    //Nouns
+                    List<Form> nSingular = forms.SplitBy(Numbers.S);
+                    List<Form> nPlural = forms.SplitBy(Numbers.P);
+                    formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                    formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                    formGrid.RowDefinitions.Add(new RowDefinition());
+                    formGrid.Children.Add(createFormList(nSingular, 0));
+                    formGrid.Children.Add(createFormList(nPlural, 1));
+                    break;
+                case PartsOfSpeech.ADJ:
+                case PartsOfSpeech.PRON:
+                case PartsOfSpeech.NUM:
+                    //Adjectives
+                    //Pronouns
+                    //Numbers
+                    List<Form> aSingular = forms.SplitBy(Numbers.S);
+                    List<Form> aPlural = forms.SplitBy(Numbers.P);
+                    if (aSingular.SplitBy(Genders.C).Count > 0)
+                    {
+                        List<Form> SingularNeuter = aSingular.SplitBy(Genders.N);
+                        List<Form> SingularCommon = aSingular.SplitBy(Genders.C);
+                        List<Form> PluralNeuter = aPlural.SplitBy(Genders.N).SplitBy(Numbers.P);
+                        List<Form> PluralCommon = aPlural.SplitBy(Genders.C).SplitBy(Numbers.P);
+                        formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                        formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                        formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                        formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                        formGrid.RowDefinitions.Add(new RowDefinition());
+                        formGrid.Children.Add(createFormList(SingularCommon, 0));
+                        formGrid.Children.Add(createFormList(SingularNeuter, 1));
+                        formGrid.Children.Add(createFormList(PluralCommon, 2));
+                        formGrid.Children.Add(createFormList(PluralNeuter, 3));
+                    }
+                    else
+                    {
+                        List<Form> SingularMasculine = aSingular.SplitBy(Genders.M);
+                        List<Form> SingularFeminine = aSingular.SplitBy(Genders.F);
+                        List<Form> SingularNeuter = aSingular.SplitBy(Genders.N);
+                        List<Form> PluralMasculine = aPlural.SplitBy(Genders.M);
+                        List<Form> PluralFeminine = aPlural.SplitBy(Genders.F);
+                        List<Form> PluralNeuter = aPlural.SplitBy(Genders.N);
+                        formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                        formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                        formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                        formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                        formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                        formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                        formGrid.RowDefinitions.Add(new RowDefinition());
+                        formGrid.Children.Add(createFormList(SingularMasculine, 0));
+                        formGrid.Children.Add(createFormList(SingularFeminine, 1));
+                        formGrid.Children.Add(createFormList(SingularNeuter, 2));
+                        formGrid.Children.Add(createFormList(PluralMasculine, 3));
+                        formGrid.Children.Add(createFormList(PluralFeminine, 4));
+                        formGrid.Children.Add(createFormList(PluralNeuter, 5));
+                    }
+                    break;
+                case PartsOfSpeech.V:
+                    //Verbs
+                    List<Form> vSingular = forms.SplitBy(Numbers.S);
+                    List<Form> vPlural = forms.SplitBy(Numbers.P);
+                    List<Form> vOther = forms.SplitBy(Numbers.X);
+                    Moods vMood = forms[0].wMood;
+                    Tenses vTense = forms[0].wTense;
+                    switch(vMood)
+                    {
+                        case Moods.IND:
+                            formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                            formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                            formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                            formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                            formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                            formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                            formGrid.RowDefinitions.Add(new RowDefinition());
+                            if(vTense == Tenses.PRES || vTense == Tenses.FUT || vTense == Tenses.IMPERF)
+                            {
+                                //Primary Tenses
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PRES), 0));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PRES), 1));
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.IMPERF), 2));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.IMPERF), 3));
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.FUT), 4));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.FUT), 5));
+                            }
+                            else
+                            {
+                                //Secodnary Tenses
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PERF), 0));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PERF), 1));
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PLUP), 2));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PLUP), 3));
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.FUTP), 4));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.FUTP), 5));
+                            }
+                            break;
+                        case Moods.SUB:
+                            formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                            formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                            formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                            formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                            formGrid.RowDefinitions.Add(new RowDefinition());
+                            if (vTense == Tenses.PRES || vTense == Tenses.IMPERF)
+                            {
+                                //Primary Tenses
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PRES), 0));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PRES), 1));
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.IMPERF), 2));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.IMPERF), 3));
+                            }
+                            else
+                            {
+                                //Secodnary Tenses
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PERF), 0));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PERF), 1));
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PLUP), 2));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PLUP), 3));
+                            }
+                            break;
+                        case Moods.PPL:
+                            List<Form> pSingular = forms.SplitBy(Numbers.S);
+                            List<Form> pPlural = forms.SplitBy(Numbers.P);
+                            if (pSingular.SplitBy(Genders.C).Count > 0)
+                            {
+                                List<Form> SingularNeuter = pSingular.SplitBy(Genders.N);
+                                List<Form> SingularCommon = pSingular.SplitBy(Genders.C);
+                                List<Form> PluralNeuter = pPlural.SplitBy(Genders.N).SplitBy(Numbers.P);
+                                List<Form> PluralCommon = pPlural.SplitBy(Genders.C).SplitBy(Numbers.P);
+                                formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                                formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                                formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                                formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                                formGrid.RowDefinitions.Add(new RowDefinition());
+                                formGrid.RowDefinitions.Add(new RowDefinition());
+                                formGrid.Children.Add(createFormList(SingularCommon.SplitBy(Tenses.PRES), 0));
+                                formGrid.Children.Add(createFormList(SingularNeuter.SplitBy(Tenses.PRES), 1));
+                                formGrid.Children.Add(createFormList(PluralCommon.SplitBy(Tenses.PRES), 2));
+                                formGrid.Children.Add(createFormList(PluralNeuter.SplitBy(Tenses.PRES), 3));
+                                formGrid.Children.Add(createFormList(SingularCommon.SplitBy(Tenses.FUT), 0, 1));
+                                formGrid.Children.Add(createFormList(SingularNeuter.SplitBy(Tenses.FUT), 1, 1));
+                                formGrid.Children.Add(createFormList(PluralCommon.SplitBy(Tenses.FUT), 2, 1));
+                                formGrid.Children.Add(createFormList(PluralNeuter.SplitBy(Tenses.FUT), 3, 1));
+                            }
+                            else
+                            {
+                                List<Form> SingularMasculine = pSingular.SplitBy(Genders.M);
+                                List<Form> SingularFeminine = pSingular.SplitBy(Genders.F);
+                                List<Form> SingularNeuter = pSingular.SplitBy(Genders.N);
+                                List<Form> PluralMasculine = pPlural.SplitBy(Genders.M);
+                                List<Form> PluralFeminine = pPlural.SplitBy(Genders.F);
+                                List<Form> PluralNeuter = pPlural.SplitBy(Genders.N);
+                                formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                                formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                                formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                                formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                                formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                                formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                                formGrid.RowDefinitions.Add(new RowDefinition());
+                                formGrid.Children.Add(createFormList(SingularMasculine, 0));
+                                formGrid.Children.Add(createFormList(SingularFeminine, 1));
+                                formGrid.Children.Add(createFormList(SingularNeuter, 2));
+                                formGrid.Children.Add(createFormList(PluralMasculine, 3));
+                                formGrid.Children.Add(createFormList(PluralFeminine, 4));
+                                formGrid.Children.Add(createFormList(PluralNeuter, 5));
+                            }
+                            break;
+                        default:
+                            List<Form> vImperative = forms.SplitBy(Moods.IMP);
+                            List<Form> vInfinitive = forms.SplitBy(Moods.INF);
+                            List<Form> vSupine = forms.SplitBy(Moods.SUPINE);
+                            formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                            formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                            formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                            formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                            formGrid.RowDefinitions.Add(new RowDefinition());
+                            formGrid.Children.Add(createFormList(vImperative.SplitBy(Numbers.S), 0));
+                            formGrid.Children.Add(createFormList(vImperative.SplitBy(Numbers.P), 1));
+                            formGrid.Children.Add(createFormList(vInfinitive, 2));
+                            formGrid.Children.Add(createFormList(vSupine, 3));
+                            break;
+                    }
+                    break;
+                case PartsOfSpeech.None:
+                    //Throw an error?
+                    break;
+                default:
+                    //Single form.
+                    formGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                    formGrid.RowDefinitions.Add(new RowDefinition());
+                    formGrid.Children.Add(createFormList(forms));
+                    break;
+            }
+            return formGrid;
+        }
+        private Expander defaultExpander()
+        {
+            Expander e = new Expander();
+            e.FontFamily = new FontFamily("Palatino Linotype Bold");
+            e.BorderBrush = new SolidColorBrush(Colors.LightSteelBlue);
+            e.FontSize = 16;
+            e.Width = 650;
+            return e;
+        }
+        /// <summary>
+        /// Creates an expander with a header correctly labeled and other consistent attributes.
+        /// </summary>
+        /// <param name="pos">Part of Speech</param>
+        /// <param name="w">Word</param>
+        /// <returns>new Expander()</returns>
+        private Expander createExpander(PartsOfSpeech pos, string w)
+        {
+            Expander e = defaultExpander();
+            e.Header = w + " - " + pos.GetDescription();
+            return e;
+        }
+        /// <summary>
+        /// Creates an expander with a header correctly labeled and other consistent attributes.
+        /// </summary>
+        /// <param name="head">Header text</param>
+        /// <returns>new Expander()</returns>
+        private Expander createExpander(string head)
+        {
+            Expander e = defaultExpander();
+            e.Header = head;
+            return e;
+        }
+        /// <summary>
+        /// Creates a stackpanel with textblocks for each form
+        /// </summary>
+        /// <param name="forms">List of forms to be added to the stackpanel</param>
+        /// <returns>new StackPanel()</returns>
+        private StackPanel createFormList(List<Form> forms, int col = 0, int row = 0)
+        {
+            StackPanel formStack = new StackPanel();
+            foreach (Form f in forms)
+            {
+                TextBlock formText = new TextBlock();
+                formText.FontFamily = new FontFamily("Palatino Linotype");
+                formText.FontSize = 14;
+                //formText.HorizontalAlignment = HorizontalAlignment.Center;
+                formText.Text = f.getFormType() + " : " + f.wForm;
+                formStack.Children.Add(formText);
+            }
+            Grid.SetColumn(formStack, col);
+            Grid.SetRow(formStack, row);
+            return formStack;
         }
         #endregion
     }

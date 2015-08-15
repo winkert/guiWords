@@ -1,7 +1,9 @@
 ﻿<Window x:Class="guiWords.AllForms"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="AllForms" Height="400" Width="600" SizeToContent="WidthAndHeight" Icon="SPQR.ICO" ResizeMode="CanMinimize">
-    <StackPanel x:Name="grd_AllForms">
-    </StackPanel>
+        Title="AllForms" Height="400" Width="675" SizeToContent="WidthAndHeight" Icon="SPQR.ICO" ResizeMode="CanMinimize" FontFamily="Palatino Linotype" FontSize="16">
+    <ScrollViewer BorderBrush="Black" BorderThickness="1,5,1,1" Height="371">
+        <StackPanel x:Name="grd_AllForms" Grid.Row="1">
+        </StackPanel>
+    </ScrollViewer>
 </Window>
