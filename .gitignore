@@ -4,3 +4,5 @@ bin/Debug
 bin/Release
 obj/Debug
 obj/Release
+.vs/guiWords/v14/.suo
+*.suo
