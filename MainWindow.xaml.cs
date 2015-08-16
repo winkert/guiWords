@@ -21,6 +21,7 @@ namespace guiWords
         {
             InitializeComponent();
             txt_Query.Focus();
+            #if DEBUG
             using (SqlConnection connect = new SqlConnection(con))
             {
                 Console.WriteLine(connect.ConnectionTimeout);
@@ -45,6 +46,7 @@ namespace guiWords
                 }
                 connect.Close();
             }
+            #endif
         }
         #region Publics
         public delegate void InitiateSearch(object o, RoutedEventArgs e);

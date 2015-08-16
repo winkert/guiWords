@@ -23,20 +23,19 @@ namespace guiWords
         {
             InitializeComponent();
             eachForm = getFormsFromDatabase(d_ID);
-            word = DBforms[0].wf_Form;
-            wPartCode = DBforms[0].part_Name.ParseEnum<PartsOfSpeech>();
+            word = eachForm[0].wWord;
+            wPartCode = eachForm[0].wPartOfSpeech;
             buildAllForms(eachForm, wPartCode);
             Title = "All Forms of " + word;
         }
         #endregion
         #region Publics
-        private List<FormsView> DBforms;
         private List<Form> eachForm;
         public string word;
         private PartsOfSpeech wPartCode;
         public FontFamily fForms = new FontFamily("Palatino Linotype");
         public FontFamily fHead = new FontFamily("Palatino Linotype Bold");
-        public GridLength fGridLength = new GridLength(1, GridUnitType.Auto);
+        
         #endregion
         #region Methods
         /// <summary>
@@ -164,8 +163,10 @@ namespace guiWords
                     formGrid.ColumnDefinitions.Add(new ColumnDefinition());
                     formGrid.ColumnDefinitions.Add(new ColumnDefinition());
                     formGrid.RowDefinitions.Add(new RowDefinition());
-                    formGrid.Children.Add(createFormList(nSingular, 0));
-                    formGrid.Children.Add(createFormList(nPlural, 1));
+                    formGrid.RowDefinitions.Add(new RowDefinition());
+                    formGrid.Children.Add(createHeader(forms[0].wGender.GetDescription(), 0));
+                    formGrid.Children.Add(createFormList(nSingular, 0, 1));
+                    formGrid.Children.Add(createFormList(nPlural, 1, 1));
                     break;
                 case PartsOfSpeech.ADJ:
                 case PartsOfSpeech.PRON:
@@ -186,10 +187,15 @@ namespace guiWords
                         formGrid.ColumnDefinitions.Add(new ColumnDefinition());
                         formGrid.ColumnDefinitions.Add(new ColumnDefinition());
                         formGrid.RowDefinitions.Add(new RowDefinition());
-                        formGrid.Children.Add(createFormList(SingularCommon, 0));
-                        formGrid.Children.Add(createFormList(SingularNeuter, 1));
-                        formGrid.Children.Add(createFormList(PluralCommon, 2));
-                        formGrid.Children.Add(createFormList(PluralNeuter, 3));
+                        formGrid.RowDefinitions.Add(new RowDefinition());
+                        formGrid.Children.Add(createHeader("Common", 0));
+                        formGrid.Children.Add(createHeader("Neuter", 1));
+                        formGrid.Children.Add(createHeader("Common", 2));
+                        formGrid.Children.Add(createHeader("Neuter", 3));
+                        formGrid.Children.Add(createFormList(SingularCommon, 0, 1));
+                        formGrid.Children.Add(createFormList(SingularNeuter, 1, 1));
+                        formGrid.Children.Add(createFormList(PluralCommon, 2, 1));
+                        formGrid.Children.Add(createFormList(PluralNeuter, 3, 1));
                     }
                     else
                     {
@@ -206,12 +212,16 @@ namespace guiWords
                         formGrid.ColumnDefinitions.Add(new ColumnDefinition());
                         formGrid.ColumnDefinitions.Add(new ColumnDefinition());
                         formGrid.RowDefinitions.Add(new RowDefinition());
-                        formGrid.Children.Add(createFormList(SingularMasculine, 0));
-                        formGrid.Children.Add(createFormList(SingularFeminine, 1));
-                        formGrid.Children.Add(createFormList(SingularNeuter, 2));
-                        formGrid.Children.Add(createFormList(PluralMasculine, 3));
-                        formGrid.Children.Add(createFormList(PluralFeminine, 4));
-                        formGrid.Children.Add(createFormList(PluralNeuter, 5));
+                        formGrid.RowDefinitions.Add(new RowDefinition());
+                        formGrid.Children.Add(createHeader("Masculine", 0));
+                        formGrid.Children.Add(createHeader("Neuter", 2));
+                        formGrid.Children.Add(createHeader("Feminine", 4));
+                        formGrid.Children.Add(createFormList(SingularMasculine, 0, 1));
+                        formGrid.Children.Add(createFormList(SingularFeminine, 1, 1));
+                        formGrid.Children.Add(createFormList(SingularNeuter, 2, 1));
+                        formGrid.Children.Add(createFormList(PluralMasculine, 3, 1));
+                        formGrid.Children.Add(createFormList(PluralFeminine, 4, 1));
+                        formGrid.Children.Add(createFormList(PluralNeuter, 5, 1));
                     }
                     break;
                 case PartsOfSpeech.V:
@@ -231,25 +241,33 @@ namespace guiWords
                             formGrid.ColumnDefinitions.Add(new ColumnDefinition());
                             formGrid.ColumnDefinitions.Add(new ColumnDefinition());
                             formGrid.RowDefinitions.Add(new RowDefinition());
-                            if(vTense == Tenses.PRES || vTense == Tenses.FUT || vTense == Tenses.IMPERF)
+                            formGrid.RowDefinitions.Add(new RowDefinition());
+
+                            if (vTense == Tenses.PRES || vTense == Tenses.FUT || vTense == Tenses.IMPERF)
                             {
+                                formGrid.Children.Add(createHeader("Present", 0));
+                                formGrid.Children.Add(createHeader("Imperfect", 2));
+                                formGrid.Children.Add(createHeader("Future", 4));
                                 //Primary Tenses
-                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PRES), 0));
-                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PRES), 1));
-                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.IMPERF), 2));
-                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.IMPERF), 3));
-                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.FUT), 4));
-                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.FUT), 5));
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PRES), 0, 1));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PRES), 1, 1));
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.IMPERF), 2, 1));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.IMPERF), 3, 1));
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.FUT), 4, 1));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.FUT), 5, 1));
                             }
                             else
                             {
+                                formGrid.Children.Add(createHeader("Perfect", 0));
+                                formGrid.Children.Add(createHeader("Pluperfect", 2));
+                                formGrid.Children.Add(createHeader("Future Perfect", 4));
                                 //Secodnary Tenses
-                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PERF), 0));
-                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PERF), 1));
-                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PLUP), 2));
-                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PLUP), 3));
-                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.FUTP), 4));
-                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.FUTP), 5));
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PERF), 0, 1));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PERF), 1, 1));
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PLUP), 2, 1));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PLUP), 3, 1));
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.FUTP), 4, 1));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.FUTP), 5, 1));
                             }
                             break;
                         case Moods.SUB:
@@ -258,21 +276,26 @@ namespace guiWords
                             formGrid.ColumnDefinitions.Add(new ColumnDefinition());
                             formGrid.ColumnDefinitions.Add(new ColumnDefinition());
                             formGrid.RowDefinitions.Add(new RowDefinition());
+                            formGrid.RowDefinitions.Add(new RowDefinition());
                             if (vTense == Tenses.PRES || vTense == Tenses.IMPERF)
                             {
+                                formGrid.Children.Add(createHeader("Present", 0));
+                                formGrid.Children.Add(createHeader("Imperfect", 2));
                                 //Primary Tenses
-                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PRES), 0));
-                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PRES), 1));
-                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.IMPERF), 2));
-                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.IMPERF), 3));
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PRES), 0, 1));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PRES), 1, 1));
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.IMPERF), 2, 1));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.IMPERF), 3, 1));
                             }
                             else
                             {
+                                formGrid.Children.Add(createHeader("Perfect", 0));
+                                formGrid.Children.Add(createHeader("Pluperfect", 2));
                                 //Secodnary Tenses
-                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PERF), 0));
-                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PERF), 1));
-                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PLUP), 2));
-                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PLUP), 3));
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PERF), 0, 1));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PERF), 1, 1));
+                                formGrid.Children.Add(createFormList(vSingular.SplitBy(Tenses.PLUP), 2, 1));
+                                formGrid.Children.Add(createFormList(vPlural.SplitBy(Tenses.PLUP), 3, 1));
                             }
                             break;
                         case Moods.PPL:
@@ -290,14 +313,24 @@ namespace guiWords
                                 formGrid.ColumnDefinitions.Add(new ColumnDefinition());
                                 formGrid.RowDefinitions.Add(new RowDefinition());
                                 formGrid.RowDefinitions.Add(new RowDefinition());
-                                formGrid.Children.Add(createFormList(SingularCommon.SplitBy(Tenses.PRES), 0));
-                                formGrid.Children.Add(createFormList(SingularNeuter.SplitBy(Tenses.PRES), 1));
-                                formGrid.Children.Add(createFormList(PluralCommon.SplitBy(Tenses.PRES), 2));
-                                formGrid.Children.Add(createFormList(PluralNeuter.SplitBy(Tenses.PRES), 3));
-                                formGrid.Children.Add(createFormList(SingularCommon.SplitBy(Tenses.FUT), 0, 1));
-                                formGrid.Children.Add(createFormList(SingularNeuter.SplitBy(Tenses.FUT), 1, 1));
-                                formGrid.Children.Add(createFormList(PluralCommon.SplitBy(Tenses.FUT), 2, 1));
-                                formGrid.Children.Add(createFormList(PluralNeuter.SplitBy(Tenses.FUT), 3, 1));
+                                formGrid.RowDefinitions.Add(new RowDefinition());
+                                formGrid.RowDefinitions.Add(new RowDefinition());
+                                formGrid.Children.Add(createHeader("Common - Present", 0));
+                                formGrid.Children.Add(createHeader("Neuter - Present", 1));
+                                formGrid.Children.Add(createHeader("Common - Present", 2));
+                                formGrid.Children.Add(createHeader("Neuter - Present", 3));
+                                formGrid.Children.Add(createHeader("Common - Future", 0, 2));
+                                formGrid.Children.Add(createHeader("Neuter - Future", 1, 2));
+                                formGrid.Children.Add(createHeader("Common - Future", 2, 2));
+                                formGrid.Children.Add(createHeader("Neuter - Future", 3, 2));
+                                formGrid.Children.Add(createFormList(SingularCommon.SplitBy(Tenses.PRES), 0, 1));
+                                formGrid.Children.Add(createFormList(SingularNeuter.SplitBy(Tenses.PRES), 1, 1));
+                                formGrid.Children.Add(createFormList(PluralCommon.SplitBy(Tenses.PRES), 2, 1));
+                                formGrid.Children.Add(createFormList(PluralNeuter.SplitBy(Tenses.PRES), 3, 1));
+                                formGrid.Children.Add(createFormList(SingularCommon.SplitBy(Tenses.FUT), 0, 3));
+                                formGrid.Children.Add(createFormList(SingularNeuter.SplitBy(Tenses.FUT), 1, 3));
+                                formGrid.Children.Add(createFormList(PluralCommon.SplitBy(Tenses.FUT), 2, 3));
+                                formGrid.Children.Add(createFormList(PluralNeuter.SplitBy(Tenses.FUT), 3, 3));
                             }
                             else
                             {
@@ -314,12 +347,16 @@ namespace guiWords
                                 formGrid.ColumnDefinitions.Add(new ColumnDefinition());
                                 formGrid.ColumnDefinitions.Add(new ColumnDefinition());
                                 formGrid.RowDefinitions.Add(new RowDefinition());
-                                formGrid.Children.Add(createFormList(SingularMasculine, 0));
-                                formGrid.Children.Add(createFormList(SingularFeminine, 1));
-                                formGrid.Children.Add(createFormList(SingularNeuter, 2));
-                                formGrid.Children.Add(createFormList(PluralMasculine, 3));
-                                formGrid.Children.Add(createFormList(PluralFeminine, 4));
-                                formGrid.Children.Add(createFormList(PluralNeuter, 5));
+                                formGrid.RowDefinitions.Add(new RowDefinition());
+                                formGrid.Children.Add(createHeader("Masculine", 0));
+                                formGrid.Children.Add(createHeader("Neuter", 2));
+                                formGrid.Children.Add(createHeader("Feminine", 4));
+                                formGrid.Children.Add(createFormList(SingularMasculine, 0, 1));
+                                formGrid.Children.Add(createFormList(SingularFeminine, 1, 1));
+                                formGrid.Children.Add(createFormList(SingularNeuter, 2, 1));
+                                formGrid.Children.Add(createFormList(PluralMasculine, 3, 1));
+                                formGrid.Children.Add(createFormList(PluralFeminine, 4, 1));
+                                formGrid.Children.Add(createFormList(PluralNeuter, 5, 1));
                             }
                             break;
                         default:
@@ -331,10 +368,14 @@ namespace guiWords
                             formGrid.ColumnDefinitions.Add(new ColumnDefinition());
                             formGrid.ColumnDefinitions.Add(new ColumnDefinition());
                             formGrid.RowDefinitions.Add(new RowDefinition());
-                            formGrid.Children.Add(createFormList(vImperative.SplitBy(Numbers.S), 0));
-                            formGrid.Children.Add(createFormList(vImperative.SplitBy(Numbers.P), 1));
-                            formGrid.Children.Add(createFormList(vInfinitive, 2));
-                            formGrid.Children.Add(createFormList(vSupine, 3));
+                            formGrid.RowDefinitions.Add(new RowDefinition());
+                            formGrid.Children.Add(createHeader("Imperative", 0));
+                            formGrid.Children.Add(createHeader("Infinitive", 2));
+                            formGrid.Children.Add(createHeader("Supine", 3));
+                            formGrid.Children.Add(createFormList(vImperative.SplitBy(Numbers.S), 0, 1));
+                            formGrid.Children.Add(createFormList(vImperative.SplitBy(Numbers.P), 1, 1));
+                            formGrid.Children.Add(createFormList(vInfinitive, 2, 1));
+                            formGrid.Children.Add(createFormList(vSupine, 3, 1));
                             break;
                     }
                     break;
@@ -348,6 +389,7 @@ namespace guiWords
                     formGrid.Children.Add(createFormList(forms));
                     break;
             }
+            formGrid.Background = new SolidColorBrush(Colors.White);
             return formGrid;
         }
         private Expander defaultExpander()
@@ -355,6 +397,7 @@ namespace guiWords
             Expander e = new Expander();
             e.FontFamily = new FontFamily("Palatino Linotype Bold");
             e.BorderBrush = new SolidColorBrush(Colors.LightSteelBlue);
+            e.Background = new SolidColorBrush(Colors.LightGray);
             e.FontSize = 16;
             e.Width = 650;
             return e;
@@ -389,7 +432,17 @@ namespace guiWords
         /// <returns>new StackPanel()</returns>
         private StackPanel createFormList(List<Form> forms, int col = 0, int row = 0)
         {
+            if(forms.Count < 1)
+            {
+                return new StackPanel();
+            }
             StackPanel formStack = new StackPanel();
+            TextBlock fHeader = new TextBlock();
+            //Define fHeader
+            fHeader.Text = forms[0].wNumber.GetDescription();
+            fHeader.FontFamily = new FontFamily("Palatino Linotype Bold");
+            fHeader.FontSize = 16;
+            formStack.Children.Add(fHeader);
             foreach (Form f in forms)
             {
                 TextBlock formText = new TextBlock();
@@ -402,6 +455,16 @@ namespace guiWords
             Grid.SetColumn(formStack, col);
             Grid.SetRow(formStack, row);
             return formStack;
+        }
+        private TextBlock createHeader(string headText, int col, int row = 0)
+        {
+            TextBlock header = new TextBlock();
+            header.FontFamily = new FontFamily("Palatino Linotype Bold");
+            header.FontSize = 16;
+            header.Text = headText;
+            Grid.SetRow(header, row);
+            Grid.SetColumn(header, col);
+            return header;
         }
         #endregion
     }

@@ -25,10 +25,12 @@ namespace guiWords
             wTense = form.vt_Name.ParseEnum<Tenses>();
             wMood = form.vm_Name.ParseEnum<Moods>();
             wVoice = form.vv_Name.ParseEnum<Voices>();
+            wWord = form.d_Word;
         }
         #region Fields
+        public string wWord;
         public string wForm;
-        PartsOfSpeech wPartOfSpeech;
+        public PartsOfSpeech wPartOfSpeech;
         public Cases wCase;
         public Numbers wNumber;
         public Genders wGender;
@@ -251,7 +253,9 @@ namespace guiWords
     public enum Numbers
     {
         None = 0,
+        [Description("Singular")]
         S,
+        [Description("Plural")]
         P,
         X
     }
@@ -270,8 +274,11 @@ namespace guiWords
     public enum Genders
     {
         None= 0,
+        [Description("Masculine")]
         M,
+        [Description("Feminine")]
         F,
+        [Description("Neuter")]
         N,
         C,
         X
