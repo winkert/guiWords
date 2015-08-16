@@ -21,6 +21,7 @@ namespace guiWords
         {
             InitializeComponent();
             txt_Query.Focus();
+            #if DEBUG
             using (SqlConnection connect = new SqlConnection(con))
             {
                 Console.WriteLine(connect.ConnectionTimeout);
@@ -37,7 +38,6 @@ namespace guiWords
                 }
                 catch (Exception e)
                 {
-                    
                     MessageBox.Show(e.Message);
                 }
                 finally
@@ -46,6 +46,7 @@ namespace guiWords
                 }
                 connect.Close();
             }
+            #endif
         }
         #region Publics
         public delegate void InitiateSearch(object o, RoutedEventArgs e);
@@ -55,20 +56,19 @@ namespace guiWords
         public Thickness tBorder = new Thickness(1);
         public Thickness noBorder = new Thickness(0);
         public List<qHistory> searchHistory = new List<qHistory>();
-
         #if DEBUG
         public static String con = "Data Source=SUPERCOMPUTER;Integrated Security=True;Connect Timeout=15;Encrypt=False;Initial Catalog=Words;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         #else
         public static string con = "Data Source=mssql2.worldplanethosting.com;Initial Catalog=winkert_guiWords;Integrated Security=False;User ID=winkert_winkert;Password=ViaPecuniae;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False";
         #endif
         #endregion
-        #region Button Events
+        #region Event Handlers
         //Quit button
         private void btn_Quit_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
-        //Search button
+        ///<summary>Search button</summary>
         private void btn_Search_Click(object sender, RoutedEventArgs e)
         {
             //Set Cursor
@@ -167,7 +167,7 @@ namespace guiWords
             Cursor = Cursors.Arrow;
             resetUI();
         }
-        //Load history
+        ///<summary>Load history</summary>
         private void btn_History_Click(object sender, RoutedEventArgs e)
         {
             //Set Cursor
@@ -180,7 +180,7 @@ namespace guiWords
             Cursor = Cursors.Arrow;
             resetUI();
         }
-        //Enter key
+        ///<summary>Enter key</summary>
         private void txt_Query_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -189,13 +189,14 @@ namespace guiWords
                 search.Invoke(sender, e); 
             }
         }
-        //Open Perseus website
+        ///<summary>Open Perseus website</summary>
         private void btn_OpenPerseus(object sender, RoutedEventArgs e)
         {
             Button b = sender as Button;
             string form = b.Tag.ToString();
             System.Diagnostics.Process.Start("http://www.perseus.tufts.edu/hopper/morph?l=" + form + "&la=la");
         }
+<<<<<<< HEAD
         //Open all forms window
         //private void btn_ViewAllForms(object sender, RoutedEventArgs e)
         //{
@@ -207,6 +208,26 @@ namespace guiWords
         #endregion
         #region Public Methods
         //Public Methods
+=======
+        ///<summary>Open all forms window</summary>
+        private void btn_ViewAllForms(object sender, RoutedEventArgs e)
+        {
+            Cursor = Cursors.Wait;
+            Button b = sender as Button;
+            int d_id = int.Parse(b.Tag.ToString());
+            AllForms f = new AllForms(d_id);
+            f.Show();
+            Cursor = Cursors.Arrow;
+        }
+        #endregion
+        #region Methods
+        /// <summary>
+        /// Calls a stored procedure which searches for the word entered. Creates a history item for the search.
+        /// </summary>
+        /// <param name="qTerms">List of terms to search. This includes variant spellings</param>
+        /// <param name="q">Query; passed into the history object</param>
+        /// <returns>new qHistory(q)</returns>
+>>>>>>> New-Features
         public qHistory SearchForms(List<string> qTerms, string q)
         {
             string query = string.Join(",", qTerms);
@@ -266,7 +287,7 @@ namespace guiWords
             //return the result set
             return s;
         }
-        public void BuildControls(qHistory s)
+        private void BuildControls(qHistory s)
         {
             int totWords = s.dWordIDs.Count();
             int totForms = s.dForms.Count();
@@ -308,12 +329,12 @@ namespace guiWords
                 /// I need to refactor the entire thing before any sort of release is possible.
                 #region All Forms
                 //All Forms button
-                //wAllForms.Content = "All Forms";
-                //wAllForms.Width = 150;
-                //wAllForms.Tag = s.dWordIDs[i];
-                //wAllForms.Click += btn_ViewAllForms;
-                //Grid.SetColumn(wAllForms, 1);
-                //wLinkGrid.Children.Add(wAllForms);
+                wAllForms.Content = "All Forms";
+                wAllForms.Width = 150;
+                wAllForms.Tag = s.dWordIDs[i];
+                wAllForms.Click += btn_ViewAllForms;
+                Grid.SetColumn(wAllForms, 1);
+                wLinkGrid.Children.Add(wAllForms);
                 #endregion
                 #region Perseus
                 //Perseus button
@@ -330,6 +351,7 @@ namespace guiWords
                 wSet.FontFamily = fHeader;
                 wSet.Header = s.dWords[i] + (char)9 + s.pPart[i] + (char)9 + s.pConj[i] + s.pDecl[i];
                 wSet.HorizontalAlignment = HorizontalAlignment.Left;
+                wSet.Width = 600;
                 wSet.BorderThickness = tBorder;
                 wSet.BorderBrush = new SolidColorBrush(Colors.LightSteelBlue);
                 wSet.IsExpanded = false;
@@ -352,13 +374,13 @@ namespace guiWords
                         wLine.FontFamily = fResults;
                         wLine.IsReadOnly = true;
                         string parsing = s.dForms[j];
-                        parsing = addParsing(parsing, s.pPerson[j]);
-                        parsing = addParsing(parsing, s.pCase[j]);
-                        parsing = addParsing(parsing, s.pNumber[j]);
-                        parsing = addParsing(parsing, s.pGender[j]);
-                        parsing = addParsing(parsing, s.pTense[j]);
-                        parsing = addParsing(parsing, s.pMood[j]);
-                        parsing = addParsing(parsing, s.pVoice[j]);
+                        parsing = parsing.addParsing(s.pPerson[j]);
+                        parsing = parsing.addParsing(s.pCase[j]);
+                        parsing = parsing.addParsing(s.pNumber[j]);
+                        parsing = parsing.addParsing(s.pGender[j]);
+                        parsing = parsing.addParsing(s.pTense[j]);
+                        parsing = parsing.addParsing(s.pMood[j]);
+                        parsing = parsing.addParsing(s.pVoice[j]);
                         wLine.Text = parsing;
                         wResults.Children.Add(wLine);
                     }
@@ -368,16 +390,7 @@ namespace guiWords
                 ResultGrid.Children.Add(wSet);
             }
         }
-        public string addParsing(string p, string info)
-        {
-            char block = (char)9;
-            if (info.Length > 0)
-            {
-                p += block + info;
-            }
-            return p;
-        }
-        public void resetUI()
+        private void resetUI()
         {
             txt_Query.Text = string.Empty;
             txt_Query.Focus();
