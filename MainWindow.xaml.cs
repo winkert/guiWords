@@ -227,7 +227,6 @@ namespace guiWords
         /// <param name="qTerms">List of terms to search. This includes variant spellings</param>
         /// <param name="q">Query; passed into the history object</param>
         /// <returns>new qHistory(q)</returns>
->>>>>>> New-Features
         public qHistory SearchForms(List<string> qTerms, string q)
         {
             string query = string.Join(",", qTerms);
@@ -325,8 +324,6 @@ namespace guiWords
                 wLinkGrid.ColumnDefinitions.Add(ncol2);
                 wLinkGrid.ColumnDefinitions.Add(ncol3);
                 wLinkGrid.ColumnDefinitions.Add(ncol4);
-                ///All Forms is an incomplete part of this application.
-                /// I need to refactor the entire thing before any sort of release is possible.
                 #region All Forms
                 //All Forms button
                 wAllForms.Content = "All Forms";
