@@ -87,6 +87,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>guiWordsDBM.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Log.cs" />
     <Compile Include="qHistory.cs" />
     <Page Include="AllForms.xaml">
       <SubType>Designer</SubType>

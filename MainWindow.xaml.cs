@@ -21,43 +21,47 @@ namespace guiWords
         {
             InitializeComponent();
             txt_Query.Focus();
-            #if DEBUG
+            AppLog.WriteLog("Initializing Application");
+#if DEBUG
+            
+            AppLog.WriteLog("Attempting to contect SQL...");
             using (SqlConnection connect = new SqlConnection(con))
             {
                 Console.WriteLine(connect.ConnectionTimeout);
                 SqlCommand command = new SqlCommand(@"select top 1 * from tWordForms", connect);
-                connect.Open();
                 try
                 {
+                    connect.Open();
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
                         Console.WriteLine(reader[0]);
                     }
                     reader.Close();
+                    connect.Close();
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message);
+                    AppLog.WriteLog(e.Message);
                 }
                 finally
                 {
-                    
-                }
-                connect.Close();
+                    connect.Close();
+                }   
             }
             #endif
         }
         #region Publics
-        public delegate void InitiateSearch(object o, RoutedEventArgs e);
-        public FontFamily fHeader = new FontFamily("Palatino Linotype Bold");
-        public FontFamily fResults = new FontFamily("Palatino Linotype");
-        public Thickness tMargins = new Thickness(10);
-        public Thickness tBorder = new Thickness(1);
-        public Thickness noBorder = new Thickness(0);
+        private delegate void InitiateSearch(object o, RoutedEventArgs e);
+        public Log AppLog = new Log("guiWords.log");
+        private FontFamily fHeader = new FontFamily("Palatino Linotype Bold");
+        private FontFamily fResults = new FontFamily("Palatino Linotype");
+        private Thickness tMargins = new Thickness(10);
+        private Thickness tBorder = new Thickness(1);
+        private Thickness noBorder = new Thickness(0);
         public List<qHistory> searchHistory = new List<qHistory>();
         #if DEBUG
-        public static String con = "Data Source=SUPERCOMPUTER;Integrated Security=True;Connect Timeout=15;Encrypt=False;Initial Catalog=Words;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        public static string con = "Data Source=SUPERCOMPUTER;Integrated Security=True;Connect Timeout=15;Encrypt=False;Initial Catalog=Words;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         #else
         public static string con = "Data Source=mssql2.worldplanethosting.com;Initial Catalog=winkert_guiWords;Integrated Security=False;User ID=winkert_winkert;Password=ViaPecuniae;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False";
         #endif
@@ -66,6 +70,7 @@ namespace guiWords
         //Quit button
         private void btn_Quit_Click(object sender, RoutedEventArgs e)
         {
+            AppLog.WriteLog("Exiting Application");
             Close();
         }
         ///<summary>Search button</summary>
@@ -196,19 +201,6 @@ namespace guiWords
             string form = b.Tag.ToString();
             System.Diagnostics.Process.Start("http://www.perseus.tufts.edu/hopper/morph?l=" + form + "&la=la");
         }
-<<<<<<< HEAD
-        //Open all forms window
-        //private void btn_ViewAllForms(object sender, RoutedEventArgs e)
-        //{
-        //    Button b = sender as Button;
-        //    int d_id = int.Parse(b.Tag.ToString());
-        //    AllForms f = new AllForms(d_id);
-        //    f.Show();
-        //}
-        #endregion
-        #region Public Methods
-        //Public Methods
-=======
         ///<summary>Open all forms window</summary>
         private void btn_ViewAllForms(object sender, RoutedEventArgs e)
         {
@@ -227,7 +219,6 @@ namespace guiWords
         /// <param name="qTerms">List of terms to search. This includes variant spellings</param>
         /// <param name="q">Query; passed into the history object</param>
         /// <returns>new qHistory(q)</returns>
->>>>>>> New-Features
         public qHistory SearchForms(List<string> qTerms, string q)
         {
             string query = string.Join(",", qTerms);
@@ -236,6 +227,7 @@ namespace guiWords
             {
                 using (guiWordsDBMDataContext gWord = new guiWordsDBMDataContext(con))
                 {
+                    AppLog.WriteLog("Initaiting search for " + query + "...");
                     #if DEBUG
                     List<FormsView> d = gWord.sp_guiWords_Parse(query).ToList();
                     #else
@@ -275,13 +267,14 @@ namespace guiWords
             catch (Exception er)
             {
                 string Error = er.Message;
-                //String Trace = er.StackTrace;
+                string Trace = er.StackTrace;
                 string Inner = "";
                 if (er.InnerException != null)
                 {
                     Inner = er.InnerException.Message;
                 }
-                MessageBox.Show("Exception: " + (char)10 + Error + (char)10 + "Inner Exception: " + (char)10 + Inner /*+ (char)10 + "Stack Trace: " + (char)10 + Trace*/);
+                AppLog.WriteLog("Exception: " + (char)10 + Error + (char)10 + "Inner Exception: " + (char)10 + Inner + (char)10 + "Stack Trace: " + (char)10 + Trace);
+                //MessageBox.Show("Exception: " + (char)10 + Error + (char)10 + "Inner Exception: " + (char)10 + Inner /*+ (char)10 + "Stack Trace: " + (char)10 + Trace*/);
                 Cursor = Cursors.Arrow;
             }
             //return the result set
