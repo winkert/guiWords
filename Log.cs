@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace guiWords
+namespace Core.Utils
 {
     public class Log
     {

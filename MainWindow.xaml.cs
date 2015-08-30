@@ -1,15 +1,16 @@
 ﻿#define DEBUG
-//#undef DEBUG
+#undef DEBUG //When you undefine this, you must undefine the one in guieWordsDBM.designer.cs also
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Data.SqlClient;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using Core.Utils;
+
 namespace guiWords
 {
     /// <summary>
@@ -24,7 +25,7 @@ namespace guiWords
             AppLog.WriteLog("Initializing Application");
 #if DEBUG
             
-            AppLog.WriteLog("Attempting to contect SQL...");
+            AppLog.WriteLog("Attempting to conect to SQL...");
             using (SqlConnection connect = new SqlConnection(con))
             {
                 Console.WriteLine(connect.ConnectionTimeout);
@@ -53,18 +54,22 @@ namespace guiWords
         }
         #region Publics
         private delegate void InitiateSearch(object o, RoutedEventArgs e);
-        public Log AppLog = new Log("guiWords.log");
+        public static Log AppLog = new Log("guiWords.log");
         private FontFamily fHeader = new FontFamily("Palatino Linotype Bold");
         private FontFamily fResults = new FontFamily("Palatino Linotype");
         private Thickness tMargins = new Thickness(10);
         private Thickness tBorder = new Thickness(1);
         private Thickness noBorder = new Thickness(0);
         public List<qHistory> searchHistory = new List<qHistory>();
-        #if DEBUG
+        private static string settingsLocation = AppDomain.CurrentDomain.BaseDirectory + "\\" + "loginSettings.bin";
+        private static List<SystemSetting> settings = settingsLocation.deserialize<SystemSetting>();
+        private static string password = settings.Where(u => u.Name == "password").Cast<SystemSetting>().FirstOrDefault().Value;
+        private static string username = settings.Where(u => u.Name == "username").Cast<SystemSetting>().FirstOrDefault().Value;
+#if DEBUG
         public static string con = "Data Source=SUPERCOMPUTER;Integrated Security=True;Connect Timeout=15;Encrypt=False;Initial Catalog=Words;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        #else
-        public static string con = "Data Source=mssql2.worldplanethosting.com;Initial Catalog=winkert_guiWords;Integrated Security=False;User ID=winkert_winkert;Password=ViaPecuniae;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False";
-        #endif
+#else
+        public static string con = "Data Source=mssql2.worldplanethosting.com;Initial Catalog=winkert_guiWords;Integrated Security=False;User ID=" + username +";Password=" + password + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False";
+#endif
         #endregion
         #region Event Handlers
         //Quit button
@@ -231,7 +236,7 @@ namespace guiWords
                     #if DEBUG
                     List<FormsView> d = gWord.sp_guiWords_Parse(query).ToList();
                     #else
-                    List<FormsView> d = gWord.winkert_sp_guiWords_Parse(query).ToList();
+                    List<FormsView> d = gWord.sp_guiWords_Parse(query).ToList();
                     #endif
                     //List<FormsView> d = gWord.FormsViews.ToList();
                     //var r = from all in d

@@ -78,6 +78,7 @@
     <Compile Include="AllForms.xaml.cs">
       <DependentUpon>AllForms.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Forms.cs" />
     <Compile Include="guiWordsDBM.cs">
       <DependentUpon>guiWordsDBM.dbml</DependentUpon>
@@ -89,6 +90,7 @@
     </Compile>
     <Compile Include="Log.cs" />
     <Compile Include="qHistory.cs" />
+    <Compile Include="SerializeSettings.cs" />
     <Page Include="AllForms.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -132,6 +134,9 @@
       <LastGenOutput>guiWordsDBM.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
+    <Content Include="loginSettings.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
