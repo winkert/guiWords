@@ -66,6 +66,9 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="SystemSettings">
+      <HintPath>..\..\SystemSettings\SystemSettings\bin\Release\SystemSettings.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -90,7 +93,6 @@
     </Compile>
     <Compile Include="Log.cs" />
     <Compile Include="qHistory.cs" />
-    <Compile Include="SerializeSettings.cs" />
     <Page Include="AllForms.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

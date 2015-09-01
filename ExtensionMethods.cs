@@ -1,50 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
-using System.IO;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace guiWords.Utilities
 {
     public static class ExtensionMethods
     {
-        #region Serialization Methods
-        /// <summary>
-        /// Serialize a serializable object to an bin file specified.
-        /// </summary>
-        /// <param name="fileLoc">Absolute location of destination</param>
-        public static void serialize<T>(this List<T> c, string fileLoc)
-        {
-
-            using (Stream FileStream = File.Create(fileLoc))
-            {
-                BinaryFormatter serializer = new BinaryFormatter();
-                serializer.Serialize(FileStream, c);
-            }
-        }
-        /// <summary>
-        /// Deserialize a serializable object from a string defining a url.
-        /// </summary>
-        /// <returns></returns>
-        public static List<T> deserialize<T>(this string fileLoc) where T : class
-        {
-
-            using (Stream FileStream = File.OpenRead(fileLoc))
-            {
-                BinaryFormatter deserializer = new BinaryFormatter();
-                try
-                {
-                    return (List<T>)deserializer.Deserialize(FileStream);
-                }
-                catch (Exception e)
-                {
-                    MainWindow.AppLog.WriteLog("Unable to load the file due to an error." + "/r/n" + e.Message);
-                    throw;
-                }
-            }
-
-        }
-        #endregion
         #region Enum Methods
         /// <summary>
         /// Returns the Description attribute of an enum value if that attribute exists. Otherwise, it returns the name.

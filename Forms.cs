@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using guiWords.Utilities;
 
 namespace guiWords
 {
@@ -128,50 +128,6 @@ namespace guiWords
                 newList = forms.Where(f => types.Contains((T)(object)f.wVoice)).Distinct().ToList();
             }
             return newList;
-        }
-    }
-    public static class EnumExtension
-    {
-        /// <summary>
-        /// Returns the Description attribute of an enum value if that attribute exists. Otherwise, it returns the name.
-        /// </summary>
-        /// <param name="enumValue"></param>
-        /// <returns>String</returns>
-        public static string GetDescription(this Enum enumValue)
-        {
-            object[] attr = enumValue.GetType().GetField(enumValue.ToString())
-                .GetCustomAttributes(typeof(DescriptionAttribute), false);
-
-            return attr.Length > 0
-               ? ((DescriptionAttribute)attr[0]).Description
-               : enumValue.ToString();
-        }
-        /// <summary>
-        /// Returns an Enum with the description matching the string. Otherwise it returns an Enum with the name matching the string.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="stringVal"></param>
-        /// <param name="defaultValue"></param>
-        /// <returns>Enum</returns>
-        public static T ParseEnum<T>(this string stringVal)
-        {
-            if(stringVal == null)
-            {
-                return (T)Enum.Parse(typeof(T), "None");
-            }
-            Type type = typeof(T);
-            if (!type.IsEnum) throw new InvalidOperationException();
-            System.Reflection.MemberInfo[] fields = type.GetFields();
-            foreach (var field in fields)
-            {
-                DescriptionAttribute[] attributes = (DescriptionAttribute[])field.GetCustomAttributes(typeof(DescriptionAttribute), false);
-
-                if (attributes != null && attributes.Length > 0 && attributes[0].Description == stringVal)
-                {
-                    return (T)Enum.Parse(typeof(T), field.Name);
-                }
-            }
-            return (T)Enum.Parse(typeof(T), stringVal);
         }
     }
     public static class OtherExtensions
