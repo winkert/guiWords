@@ -49,7 +49,7 @@ namespace guiWords
             List<FormsView> AllForms;
             using (guiWordsDBMDataContext gWord = new guiWordsDBMDataContext(MainWindow.con))
             {
-                AllForms = gWord.sp_AllForms(d).ToList();
+                AllForms = gWord.sp_AllForms(d, wPartCode.GetDescription()).ToList();
             }
             List<Form> forms = new List<Form>();
             foreach (FormsView form in AllForms)

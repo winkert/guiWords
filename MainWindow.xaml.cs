@@ -1,5 +1,5 @@
 ﻿#define DEBUG
-#undef DEBUG //When you undefine this, you must undefine the one in guieWordsDBM.designer.cs also
+#undef DEBUG //When you undefine this, you must undefine the one in guiWordsDBM.designer.cs also
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using SystemSettings;
 using Core.Utils;
+using System.Data.SqlClient;
 
 namespace guiWords
 {
