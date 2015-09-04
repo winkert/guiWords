@@ -4,10 +4,5 @@ bin/Debug
 bin/Release
 obj/Debug
 obj/Release
-<<<<<<< HEAD
 /.vs/guiWords/v14/.suo
-=======
-.vs/guiWords/v14/.suo
-*.suo
->>>>>>> New-Features
 *.suo
