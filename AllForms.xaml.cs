@@ -49,7 +49,7 @@ namespace guiWords
             List<FormsView> AllForms;
             using (guiWordsDBMDataContext gWord = new guiWordsDBMDataContext(MainWindow.con))
             {
-                AllForms = gWord.sp_AllForms(d, wPartCode.GetDescription()).ToList();
+                AllForms = gWord.sp_AllForms(d).ToList();
             }
             List<Form> forms = new List<Form>();
             foreach (FormsView form in AllForms)
@@ -74,6 +74,7 @@ namespace guiWords
             /// Step 5: For Verbs use multiple expanders
             ///         multiply by number of distinct voices, moods, and numbers for nouns
             /// Step 6: Populate the grids/panels/expanders with the forms ordered out based on the breakdown
+            /// 
             switch (pos)
             {
                 case PartsOfSpeech.N:

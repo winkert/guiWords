@@ -31,6 +31,10 @@ namespace guiWords.Utilities
         {
             Type type = typeof(T);
             if (!type.IsEnum) throw new InvalidOperationException();
+            if (stringVal == null || stringVal == string.Empty || stringVal == "")
+            {
+                return (T)Enum.Parse(typeof(T), "None");
+            }
             System.Reflection.MemberInfo[] fields = type.GetFields();
             foreach (var field in fields)
             {

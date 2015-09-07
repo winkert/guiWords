@@ -210,9 +210,9 @@ namespace guiWords
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="winkert_winkert.sp_AllForms")]
-		public ISingleResult<FormsView> sp_AllForms([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> d_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(15)")] string part)
+		public ISingleResult<FormsView> sp_AllForms([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> d_ID)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), d_ID, part);
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), d_ID);
 			return ((ISingleResult<FormsView>)(result.ReturnValue));
 		}
 	}
